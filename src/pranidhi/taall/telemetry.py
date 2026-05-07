@@ -169,7 +169,7 @@ class TelemetryCollector:
             for dept, scores in self._department_risk.items()
             if scores
         }
-        top_depts = sorted(dept_avg, key=dept_avg.get, reverse=True)[:5]
+        top_depts = sorted(dept_avg, key=lambda k: dept_avg[k], reverse=True)[:5]
 
         # Find highest-risk platforms
         plat_avg = {
@@ -177,10 +177,10 @@ class TelemetryCollector:
             for plat, scores in self._platform_risk.items()
             if scores
         }
-        top_plats = sorted(plat_avg, key=plat_avg.get, reverse=True)[:5]
+        top_plats = sorted(plat_avg, key=lambda k: plat_avg[k], reverse=True)[:5]
 
         # Most frequently offered coaching strategy
-        most_common = max(self._strategy_counts, key=self._strategy_counts.get) if self._strategy_counts else "N/A"
+        most_common = max(self._strategy_counts, key=lambda k: self._strategy_counts[k]) if self._strategy_counts else "N/A"
 
         return PromptHygieneMetrics(
             total_scans=self._total_scans,

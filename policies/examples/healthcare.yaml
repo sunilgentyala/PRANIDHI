@@ -1,0 +1,17 @@
+# PRANIDHI Policy: Healthcare Organisation (HIPAA-aligned)
+enterprise_floor:
+  absolute_block_entities:
+    - CREDENTIAL
+departments:
+  clinical:
+    block_threshold: 0.4
+  research:
+    block_threshold: 0.6
+  billing:
+    block_threshold: 0.5
+exempt_roles:
+  - security_researcher
+  - irb_approved_researcher
+settings:
+  default_block_threshold: 0.5
+  regulatory_framework: "HIPAA"

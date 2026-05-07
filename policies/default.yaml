@@ -1,0 +1,25 @@
+# PRANIDHI Default Policy Configuration
+enterprise_floor:
+  absolute_block_entities:
+    - CREDENTIAL
+    - API_KEY
+departments:
+  finance:
+    block_threshold: 0.6
+  legal:
+    block_threshold: 0.5
+  engineering:
+    block_threshold: 0.7
+  hr:
+    block_threshold: 0.55
+  marketing:
+    block_threshold: 0.75
+exempt_roles:
+  - security_researcher
+  - red_team
+  - compliance_auditor
+settings:
+  default_block_threshold: 0.7
+  coaching_enabled: true
+  telemetry_enabled: true
+  max_suggestions_per_scan: 3

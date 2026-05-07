@@ -5,7 +5,6 @@ Covers all five layers with unit tests for decomposition, risk scoring,
 coaching strategy selection, policy enforcement, and telemetry collection.
 """
 
-import pytest
 from pranidhi.models import (
     ContentBlock, ContentBlockType, UserContext, RiskScore,
     RiskAnnotation, Disposition, SensitivityTier,
@@ -15,8 +14,6 @@ from pranidhi.idl.decomposer import Decomposer
 from pranidhi.crse.risk_scorer import RiskScorer
 from pranidhi.nudging_engine.engine import NudgingEngine
 from pranidhi.nudging_engine.strategies.substitutive import SubstitutiveReformulator
-from pranidhi.nudging_engine.strategies.decomposition import DecompositionPlanner
-from pranidhi.nudging_engine.strategies.abstraction import AbstractionElevator
 from pranidhi.nudging_engine.strategies.redirection import ToolRedirector
 from pranidhi.peol.enforcer import PolicyEnforcer
 from pranidhi.taall.telemetry import TelemetryCollector

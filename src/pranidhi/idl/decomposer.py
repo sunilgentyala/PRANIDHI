@@ -12,7 +12,6 @@ import re
 import uuid
 import base64
 import logging
-from typing import Optional
 
 from pranidhi.models import ContentBlock, ContentBlockType
 

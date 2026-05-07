@@ -10,13 +10,11 @@ from __future__ import annotations
 
 import json
 import logging
-import time
 from collections import defaultdict
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from typing import Optional
 
-from pranidhi.models import ScanResult, Disposition, CoachingStrategy
+from pranidhi.models import ScanResult
 
 logger = logging.getLogger(__name__)
 

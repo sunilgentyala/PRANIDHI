@@ -9,11 +9,10 @@ interventions through four distinct modalities.
 from __future__ import annotations
 
 import logging
-from typing import Optional
 
 from pranidhi.models import (
     RiskAnnotation, UserContext, CoachingSuggestion,
-    CoachingStrategy, Disposition,
+    Disposition,
 )
 from pranidhi.nudging_engine.strategies.substitutive import SubstitutiveReformulator
 from pranidhi.nudging_engine.strategies.decomposition import DecompositionPlanner
@@ -122,7 +121,6 @@ class NudgingEngine:
         - Fallback → Substitutive Reformulation
         """
         results: list[CoachingSuggestion] = []
-        block = annotation.block
         risk = annotation.risk_score
 
         # Credential-type content: always redirect

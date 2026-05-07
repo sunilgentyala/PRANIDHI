@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Optional
 
 from pranidhi.models import (
-    ScanResult, UserContext, Disposition, RiskAnnotation
+    ScanResult, UserContext
 )
 from pranidhi.idl.decomposer import Decomposer
 from pranidhi.crse.risk_scorer import RiskScorer

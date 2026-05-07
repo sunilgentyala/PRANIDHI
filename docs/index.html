@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PRANIDHI — Five-Layer Architecture</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, "Segoe UI", sans-serif;
+      background: #f9f8f5;
+      color: #1a1a18;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e5e3dc;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    header h1 span { color: #888; font-weight: 400; margin-left: 8px; font-size: 14px; }
+
+    header a {
+      font-size: 13px;
+      color: #185fa5;
+      text-decoration: none;
+    }
+    header a:hover { text-decoration: underline; }
+
+    .hint {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      padding: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 56px);
+    }
+
+    .diagram-pane {
+      flex: 1;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: auto;
+    }
+
+    .diagram-pane svg {
+      max-width: 720px;
+      width: 100%;
+    }
+
+    /* Make clickable layers show pointer and highlight on hover */
+    .diagram-pane svg g[onclick] {
+      cursor: pointer;
+    }
+    .diagram-pane svg g[onclick]:hover rect:first-child,
+    .diagram-pane svg g[onclick]:hover rect:first-of-type {
+      filter: brightness(0.93);
+    }
+
+    /* Info panel */
+    .info-panel {
+      width: 340px;
+      min-width: 280px;
+      background: #fff;
+      border-left: 1px solid #e5e3dc;
+      padding: 28px 24px;
+      overflow-y: auto;
+      transition: transform 0.2s ease;
+    }
+
+    .info-panel.empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #aaa;
+      gap: 12px;
+    }
+
+    .info-panel.empty svg { opacity: 0.3; }
+
+    .layer-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .info-panel h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .info-panel .subtitle {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    .info-panel p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: #3a3a38;
+      margin-bottom: 14px;
+    }
+
+    .info-panel h3 {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #888;
+      margin: 18px 0 8px;
+    }
+
+    .info-panel ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .info-panel ul li {
+      font-size: 13px;
+      color: #3a3a38;
+      padding: 6px 10px;
+      border-radius: 5px;
+      border: 1px solid #e8e6df;
+      background: #faf9f6;
+      line-height: 1.4;
+    }
+
+    .info-panel ul li strong { display: block; font-size: 12px; margin-bottom: 2px; }
+
+    @media (max-width: 680px) {
+      .layout { flex-direction: column; }
+      .info-panel {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #e5e3dc;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>प्रणिधि PRANIDHI <span>Interactive Architecture</span></h1>
+  <a href="https://github.com/sunilgentyala/PRANIDHI" target="_blank">View on GitHub →</a>
+</header>
+
+<p class="hint">Click any layer in the diagram to learn more</p>
+
+<div class="layout">
+  <div class="diagram-pane">
+    <svg width="100%" viewBox="0 0 680 620" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<!-- Title region -->
+<text x="340" y="30" text-anchor="middle" style="fill:rgb(20,20,19);font-family:-apple-system,'Segoe UI',sans-serif;font-size:14px;font-weight:500">PRANIDHI five-layer architecture</text>
+<!-- User input -->
+<g style="font-family:-apple-system,'Segoe UI',sans-serif">
+  <rect x="40" y="60" width="120" height="44" rx="8" style="fill:rgb(241,239,232);stroke:rgb(95,94,90);stroke-width:0.5"/>
+  <text x="100" y="82" text-anchor="middle" dominant-baseline="central" style="fill:rgb(68,68,65);font-size:14px;font-weight:500">User prompt</text>
+</g>
+<!-- Layer 1: IDL -->
+<g onclick="sendPrompt('idl')" style="cursor:pointer;font-family:-apple-system,'Segoe UI',sans-serif">
+  <rect x="200" y="56" width="280" height="52" rx="8" style="fill:rgb(230,241,251);stroke:rgb(24,95,165);stroke-width:0.5"/>
+  <text x="340" y="73" text-anchor="middle" dominant-baseline="central" style="fill:rgb(12,68,124);font-size:14px;font-weight:500">Layer 1: IDL</text>
+  <text x="340" y="93" text-anchor="middle" dominant-baseline="central" style="fill:rgb(24,95,165);font-size:12px">Ingestion and decomposition</text>
+</g>
+<!-- Arrow user -> L1 -->
+<line x1="160" y1="82" x2="198" y2="82" marker-end="url(#arrow)" style="stroke:rgb(115,114,108);stroke-width:1.5"/>
+<!-- Layer 2: CRSE -->
+<g onclick="sendPrompt('crse')" style="cursor:pointer;font-family:-apple-system,'Segoe UI',sans-serif">
+  <rect x="200" y="136" width="280" height="52" rx="8" style="fill:rgb(238,237,254);stroke:rgb(83,74,183);stroke-width:0.5"/>
+  <text x="340" y="153" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60,52,137);font-size:14px;font-weight:500">Layer 2: CRSE</text>
+  <text x="340" y="173" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83,74,183);font-size:12px">Classification and risk scoring</text>
+</g>
+<!-- Arrow L1 -> L2 -->
+<line x1="340" y1="108" x2="340" y2="134" marker-end="url(#arrow)" style="stroke:rgb(115,114,108);stroke-width:1.5"/>
+<!-- CRSE dimension badges -->
+<rect x="510" y="128" width="140" height="24" rx="4" style="fill:rgb(238,237,254);stroke:rgb(83,74,183);stroke-width:0.5"/>
+<text x="580" y="140" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83,74,183);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Data sensitivity</text>
+<rect x="510" y="155" width="140" height="24" rx="4" style="fill:rgb(238,237,254);stroke:rgb(83,74,183);stroke-width:0.5"/>
+<text x="580" y="167" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83,74,183);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Exposure risk</text>
+<rect x="510" y="182" width="140" height="24" rx="4" style="fill:rgb(238,237,254);stroke:rgb(83,74,183);stroke-width:0.5"/>
+<text x="580" y="194" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83,74,183);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Inferential leakage</text>
+<line x1="480" y1="162" x2="508" y2="162" style="stroke:rgb(115,114,108);stroke-width:0.5;stroke-dasharray:4,3"/>
+<!-- Layer 3: Nudging Engine -->
+<g onclick="sendPrompt('ne')" style="cursor:pointer;font-family:-apple-system,'Segoe UI',sans-serif">
+  <rect x="170" y="230" width="340" height="110" rx="12" style="fill:rgb(250,236,231);stroke:rgb(153,60,29);stroke-width:1.5"/>
+  <text x="340" y="256" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113,43,19);font-size:14px;font-weight:500">Layer 3: Nudging engine</text>
+  <text x="340" y="276" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153,60,29);font-size:12px">Core innovation</text>
+  <rect x="190" y="293" width="145" height="24" rx="4" style="fill:rgb(250,236,231);stroke:rgb(153,60,29);stroke-width:0.5"/>
+  <text x="262" y="305" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153,60,29);font-size:12px">Substitutive reformat</text>
+  <rect x="345" y="293" width="145" height="24" rx="4" style="fill:rgb(250,236,231);stroke:rgb(153,60,29);stroke-width:0.5"/>
+  <text x="418" y="305" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153,60,29);font-size:12px">Decomposition</text>
+  <rect x="190" y="314" width="145" height="24" rx="4" style="fill:rgb(250,236,231);stroke:rgb(153,60,29);stroke-width:0.5"/>
+  <text x="262" y="326" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153,60,29);font-size:12px">Abstraction elevate</text>
+  <rect x="345" y="314" width="145" height="24" rx="4" style="fill:rgb(250,236,231);stroke:rgb(153,60,29);stroke-width:0.5"/>
+  <text x="418" y="326" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153,60,29);font-size:12px">Tool redirection</text>
+</g>
+<!-- Arrow L2 -> L3 -->
+<line x1="340" y1="188" x2="340" y2="228" marker-end="url(#arrow)" style="stroke:rgb(115,114,108);stroke-width:1.5"/>
+<!-- Coaching feedback arrow -->
+<path d="M170 285 L80 285 L80 104 L100 104" fill="none" stroke="#D85A30" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)" opacity="0.7"/>
+<text x="58" y="200" text-anchor="middle" transform="rotate(-90,58,200)" style="fill:rgb(61,61,58);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Coaching feedback</text>
+<!-- Layer 4: PEOL -->
+<g onclick="sendPrompt('peol')" style="cursor:pointer;font-family:-apple-system,'Segoe UI',sans-serif">
+  <rect x="200" y="370" width="280" height="52" rx="8" style="fill:rgb(225,245,238);stroke:rgb(15,110,86);stroke-width:0.5"/>
+  <text x="340" y="387" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8,80,65);font-size:14px;font-weight:500">Layer 4: PEOL</text>
+  <text x="340" y="407" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15,110,86);font-size:12px">Policy enforcement</text>
+</g>
+<!-- Arrow L3 -> L4 -->
+<line x1="340" y1="340" x2="340" y2="368" marker-end="url(#arrow)" style="stroke:rgb(115,114,108);stroke-width:1.5"/>
+<!-- Policy tier badges -->
+<rect x="510" y="360" width="140" height="24" rx="4" style="fill:rgb(225,245,238);stroke:rgb(15,110,86);stroke-width:0.5"/>
+<text x="580" y="372" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15,110,86);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Enterprise floor</text>
+<rect x="510" y="387" width="140" height="24" rx="4" style="fill:rgb(225,245,238);stroke:rgb(15,110,86);stroke-width:0.5"/>
+<text x="580" y="399" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15,110,86);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Business unit rules</text>
+<rect x="510" y="414" width="140" height="24" rx="4" style="fill:rgb(225,245,238);stroke:rgb(15,110,86);stroke-width:0.5"/>
+<text x="580" y="426" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15,110,86);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Role exemptions</text>
+<line x1="480" y1="396" x2="508" y2="396" style="stroke:rgb(115,114,108);stroke-width:0.5;stroke-dasharray:4,3"/>
+<!-- Layer 5: TAALL -->
+<g onclick="sendPrompt('taall')" style="cursor:pointer;font-family:-apple-system,'Segoe UI',sans-serif">
+  <rect x="200" y="450" width="280" height="52" rx="8" style="fill:rgb(234,243,222);stroke:rgb(59,109,17);stroke-width:0.5"/>
+  <text x="340" y="467" text-anchor="middle" dominant-baseline="central" style="fill:rgb(39,80,10);font-size:14px;font-weight:500">Layer 5: TAALL</text>
+  <text x="340" y="487" text-anchor="middle" dominant-baseline="central" style="fill:rgb(59,109,17);font-size:12px">Telemetry and adaptive learning</text>
+</g>
+<!-- Arrow L4 -> L5 -->
+<line x1="340" y1="422" x2="340" y2="448" marker-end="url(#arrow)" style="stroke:rgb(115,114,108);stroke-width:1.5"/>
+<!-- LLM endpoints -->
+<g style="font-family:-apple-system,'Segoe UI',sans-serif">
+  <rect x="120" y="540" width="90" height="36" rx="6" style="fill:rgb(241,239,232);stroke:rgb(95,94,90);stroke-width:0.5"/>
+  <text x="165" y="558" text-anchor="middle" dominant-baseline="central" style="fill:rgb(95,94,90);font-size:12px">Claude</text>
+  <rect x="220" y="540" width="90" height="36" rx="6" style="fill:rgb(241,239,232);stroke:rgb(95,94,90);stroke-width:0.5"/>
+  <text x="265" y="558" text-anchor="middle" dominant-baseline="central" style="fill:rgb(95,94,90);font-size:12px">ChatGPT</text>
+  <rect x="320" y="540" width="90" height="36" rx="6" style="fill:rgb(241,239,232);stroke:rgb(95,94,90);stroke-width:0.5"/>
+  <text x="365" y="558" text-anchor="middle" dominant-baseline="central" style="fill:rgb(95,94,90);font-size:12px">Perplexity</text>
+  <rect x="420" y="540" width="90" height="36" rx="6" style="fill:rgb(241,239,232);stroke:rgb(95,94,90);stroke-width:0.5"/>
+  <text x="465" y="558" text-anchor="middle" dominant-baseline="central" style="fill:rgb(95,94,90);font-size:12px">Grok</text>
+  <rect x="520" y="540" width="90" height="36" rx="6" style="fill:rgb(241,239,232);stroke:rgb(95,94,90);stroke-width:0.5"/>
+  <text x="565" y="558" text-anchor="middle" dominant-baseline="central" style="fill:rgb(95,94,90);font-size:12px">Gemini</text>
+</g>
+<line x1="340" y1="502" x2="340" y2="538" style="stroke:rgb(115,114,108);stroke-width:1.5"/>
+<text x="340" y="532" text-anchor="middle" style="fill:rgb(61,61,58);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Approved prompts dispatched to target platform</text>
+<!-- TAALL adaptive feedback loop -->
+<path d="M480 476 L620 476 L620 120 L480 120" fill="none" stroke="#639922" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)" opacity="0.5"/>
+<text x="636" y="300" text-anchor="middle" transform="rotate(90,636,300)" style="fill:rgb(61,61,58);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Adaptive feedback loop</text>
+<!-- Legend -->
+<rect x="40" y="570" width="12" height="12" rx="2" fill="#97C459"/>
+<text x="58" y="581" style="fill:rgb(61,61,58);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Green: proceed</text>
+<rect x="170" y="570" width="12" height="12" rx="2" fill="#EF9F27"/>
+<text x="188" y="581" style="fill:rgb(61,61,58);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Amber: coach</text>
+<rect x="280" y="570" width="12" height="12" rx="2" fill="#E24B4A"/>
+<text x="298" y="581" style="fill:rgb(61,61,58);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Red: block + guide</text>
+    </svg>
+  </div>
+
+  <div class="info-panel empty" id="panel">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <p>Click a layer in the diagram to see its description.</p>
+  </div>
+</div>
+
+<script>
+const LAYERS = {
+  idl: {
+    tag: 'Layer 1', tagColor: '#185fa5', tagBg: '#e6f1fb',
+    title: 'IDL — Ingestion & Decomposition Layer',
+    subtitle: 'Structural decomposition and encoding normalisation',
+    body: 'The IDL is the entry point for all prompt traffic. It receives raw user input and transforms it into semantically discrete ContentBlocks for downstream processing.',
+    bullets: [
+      { label: 'Encoding normalisation', detail: 'Strips zero-width characters, decodes Base64 fragments and URL-encoded sequences, normalises Unicode homoglyphs (Cyrillic/Latin lookalikes).' },
+      { label: 'PII detection', detail: 'Regex-based extraction of emails, SSNs, credit cards, account numbers, phone numbers, and IP addresses.' },
+      { label: 'Credential detection', detail: 'High-entropy pattern matching for API keys, tokens, secrets, and bearer credentials.' },
+      { label: 'Code detection', detail: 'Heuristic scanning for programming constructs (def, class, SELECT, etc.).' },
+    ]
+  },
+  crse: {
+    tag: 'Layer 2', tagColor: '#534ab7', tagBg: '#eeedfe',
+    title: 'CRSE — Classification & Risk Scoring Engine',
+    subtitle: 'Three-dimensional composite risk scoring',
+    body: 'The CRSE assigns a composite risk score to each ContentBlock across three independent dimensions, producing a GREEN / AMBER / RED disposition.',
+    bullets: [
+      { label: 'Data sensitivity', detail: 'How inherently sensitive is the content type? Credentials score highest, followed by PII, code, URLs, and free text.' },
+      { label: 'Exposure risk', detail: 'Adjusted by target platform (external LLM vs. internal sandbox) and user role (trained security analysts receive lower penalties).' },
+      { label: 'Inferential leakage', detail: 'Can the prompt leak sensitive information indirectly, even if no explicit PII is present? Scored separately to catch aggregation attacks.' },
+    ]
+  },
+  ne: {
+    tag: 'Layer 3 — Core Innovation', tagColor: '#993c1d', tagBg: '#faeae7',
+    title: 'NE — Nudging Engine',
+    subtitle: 'Real-time prompt coaching with four intervention strategies',
+    body: 'Instead of blocking a risky prompt outright, the Nudging Engine offers the user a safer reformulation in real time — teaching them to work with AI rather than around guardrails.',
+    bullets: [
+      { label: 'Substitutive Reformulation', detail: 'Replaces real data with synthetic equivalents. "Analyse Client-A\'s $2.3M contract" → "Analyse a mid-size client contract in the $2–3M range."' },
+      { label: 'Decomposition', detail: 'Splits one risky multi-entity prompt into several safe sub-queries, each containing only non-sensitive fragments.' },
+      { label: 'Abstraction Elevation', detail: 'Lifts specific instances to general patterns. "Why did Acme Corp\'s Q3 revenue drop 14.7%?" → "What frameworks analyse 10–20% revenue declines?"' },
+      { label: 'Tool Redirection', detail: 'Routes the request to a safer execution path: an internal sandbox model, an approved knowledge base, or a privacy-preserving API.' },
+    ]
+  },
+  peol: {
+    tag: 'Layer 4', tagColor: '#0f6e56', tagBg: '#e1f5ee',
+    title: 'PEOL — Policy Enforcement & Orchestration Layer',
+    subtitle: 'Federated policy hierarchy across three tiers',
+    body: 'The PEOL makes the final allow / coach / block decision by evaluating the risk annotations against a federated policy hierarchy. Policies compose — stricter tiers always win.',
+    bullets: [
+      { label: 'Enterprise floor', detail: 'Organisation-wide baseline rules set by the security team. No individual or business unit can relax these.' },
+      { label: 'Business unit rules', detail: 'Department-specific policies layered on top of the enterprise floor. A legal team might have stricter PII rules; a security team might have relaxed code-snippet rules.' },
+      { label: 'Role exemptions', detail: 'Fine-grained per-role overrides, e.g. a CISO can send prompts that a junior analyst cannot. Managed via YAML policy files.' },
+    ]
+  },
+  taall: {
+    tag: 'Layer 5', tagColor: '#3b6d11', tagBg: '#eaf3de',
+    title: 'TAALL — Telemetry, Analytics & Adaptive Learning Layer',
+    subtitle: 'Behavioural analytics and continuous threshold adaptation',
+    body: 'The TAALL collects structured telemetry on every scan and uses it to continuously improve PRANIDHI\'s detection thresholds and coaching effectiveness.',
+    bullets: [
+      { label: 'Behavioural analytics', detail: 'Tracks risk distributions per user, department, and platform over time to surface anomalies and high-risk actors.' },
+      { label: 'Adaptive thresholds', detail: 'Risk scoring thresholds drift toward historical norms — preventing alert fatigue while remaining sensitive to genuine outliers.' },
+      { label: 'Coaching effectiveness', detail: 'Measures which coaching strategies users actually accept vs. override, feeding back into strategy selection weights.' },
+      { label: 'Audit log', detail: 'Append-only structured event log for compliance reporting, incident response, and regulatory audits.' },
+    ]
+  }
+};
+
+function sendPrompt(key) {
+  const layer = LAYERS[key];
+  if (!layer) return;
+  const panel = document.getElementById('panel');
+  panel.classList.remove('empty');
+  panel.innerHTML = `
+    <span class="layer-tag" style="color:${layer.tagColor};background:${layer.tagBg}">${layer.tag}</span>
+    <h2>${layer.title}</h2>
+    <p class="subtitle">${layer.subtitle}</p>
+    <p>${layer.body}</p>
+    <h3>Key components</h3>
+    <ul>
+      ${layer.bullets.map(b => `<li><strong>${b.label}</strong>${b.detail}</li>`).join('')}
+    </ul>
+  `;
+}
+</script>
+</body>
+</html>

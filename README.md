@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/architecture/pranidhi-banner.svg" alt="PRANIDHI Architecture" width="800"/>
+</p>
+
 <h1 align="center">प्रणिधि PRANIDHI</h1>
 <h3 align="center">Prompt Risk Analysis, Network Inspection & Data Handling Integrity</h3>
 

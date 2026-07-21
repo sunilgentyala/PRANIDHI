@@ -163,22 +163,28 @@ PRANIDHI embodies this philosophy: it is the attentive inspector that observes e
 
 ## Research
 
-This framework is accompanied by an academic paper suitable for IEEE/ACM/Elsevier venues. See [`docs/research_papers/`](docs/research_papers/) for:
+An academic paper on PRANIDHI is in preparation for submission to an IEEE/Elsevier venue. It is not yet public; this repository is the primary source of truth for the framework's design and behaviour.
 
-- Full paper draft (IEEE/ACM/Elsevier format)
-- Gap analysis of seven critical deficiencies in existing approaches
-- PRANIDHI Prompt Hygiene Benchmark (PPHB) specification
-- Preliminary evaluation results
+### Reproducible evaluation
+
+[`benchmarks/`](benchmarks/) contains a small, fully-synthetic, seeded prompt corpus (`corpus.py`) and an evaluation harness (`run_evaluation.py`) that runs the real pipeline in `src/pranidhi` against it and against a prohibition-only baseline that shares the same detection layer. Run it yourself:
+
+```bash
+python -m benchmarks.run_evaluation
+```
+
+This is a reproducibility artifact, not a live enterprise deployment or a human-subjects study — every number it produces comes from executing the actual code in this repository against synthetic, templated prompts.
 
 ## Roadmap
 
 - [x] Core architecture specification
 - [x] Gap analysis and competitive positioning
 - [x] Five-layer pipeline with 36 passing tests
+- [x] Reproducible synthetic-corpus evaluation harness (`benchmarks/`)
 - [ ] Nudging Engine — advanced LLM-powered reformulation
 - [ ] Browser extension (Chrome/Firefox)
 - [ ] VS Code extension
-- [ ] PPHB benchmark corpus (10,000+ annotated prompts)
+- [ ] Large-scale annotated benchmark corpus (10,000+ prompts, human-reviewed)
 - [ ] Connector: Claude API
 - [ ] Connector: OpenAI API
 - [ ] Connector: Perplexity, Grok, Gemini APIs

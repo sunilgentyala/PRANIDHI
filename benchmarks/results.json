@@ -1,0 +1,51 @@
+{
+  "corpus_size": 400,
+  "corpus_seed": 20260721,
+  "category_distribution": {
+    "benign": 80,
+    "credential": 80,
+    "code": 80,
+    "pii": 80,
+    "financial_leak": 80
+  },
+  "pranidhi": {
+    "disposition_distribution_pct": {
+      "GREEN": 24.0,
+      "AMBER": 56.0,
+      "RED": 20.0
+    },
+    "mean_latency_ms": 0.0551,
+    "p95_latency_ms": 0.0765,
+    "coaching_coverage_pct": 100.0,
+    "strategy_selection_distribution": {
+      "TOOL_REDIRECTION": 80,
+      "SUBSTITUTIVE_REFORMULATION": 136,
+      "ABSTRACTION_ELEVATION": 105
+    }
+  },
+  "prohibition_only_baseline": {
+    "disposition_distribution_pct": {
+      "GREEN": 24.0,
+      "RED": 76.0
+    },
+    "mean_latency_ms": 0.0502,
+    "coaching_coverage_pct": 0.0
+  },
+  "detection_quality_vs_ground_truth": {
+    "note": "Ground truth is the corpus's own injected labels (has_pii/has_credential/has_code/financial_leak vs benign), independent of the pipeline's own scoring. Both arms share the same IDL/CRSE, so this figure is identical for PRANIDHI and the baseline; it isolates detection quality from the coaching-vs-block decision.",
+    "precision": 0.9605,
+    "recall": 0.9125,
+    "f1": 0.9359,
+    "true_positives": 292,
+    "false_positives": 12,
+    "false_negatives": 28
+  },
+  "risk_score_stats": {
+    "mean_composite": 0.3621,
+    "mean_inferential_leakage": 0.3899
+  },
+  "methodology": {
+    "corpus": "Fully synthetic, templated, seeded (benchmarks/corpus.py). No real enterprise data. This is a reproducibility artifact, not a live deployment or human-subjects study.",
+    "baseline": "Shares PRANIDHI's real IDL/CRSE; AMBER-equivalent risk is escalated to a hard block since the baseline has no coaching path."
+  }
+}

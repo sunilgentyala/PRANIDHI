@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 160" width="720" height="160" role="img" aria-label="PRANIDHI wordmark">
+  <defs>
+    <linearGradient id="badgeGrad2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f1d1a"/>
+      <stop offset="100%" stop-color="#0d0c0a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon (scaled copy of logo.svg) -->
+  <g transform="translate(8,8) scale(0.72)">
+    <rect x="8" y="8" width="184" height="184" rx="44" fill="url(#badgeGrad2)"/>
+    <circle cx="100" cy="100" r="72" fill="none" stroke="#D85A30" stroke-width="1.5" stroke-dasharray="3 7" opacity="0.55"/>
+    <path d="M34,100 Q100,52 166,100 Q100,148 34,100 Z" fill="#F4EFE8"/>
+    <path d="M34,100 Q100,52 166,100 Q100,148 34,100 Z" fill="none" stroke="#0d0c0a" stroke-width="2.5"/>
+    <circle cx="100" cy="100" r="33" fill="#993C1D"/>
+    <circle cx="100" cy="100" r="14" fill="#14100D"/>
+    <circle cx="93" cy="93" r="5" fill="#F4EFE8" opacity="0.9"/>
+  </g>
+
+  <text x="168" y="88" font-family="-apple-system,'Segoe UI',sans-serif" font-size="52" font-weight="700" letter-spacing="-0.01em" fill="#1a1a18">PRANIDHI</text>
+  <text x="169" y="118" font-family="'Noto Sans Devanagari','Segoe UI',sans-serif" font-size="24" fill="#888">प्रणिधि · the attentive inspector</text>
+</svg>

@@ -163,7 +163,7 @@ PRANIDHI embodies this philosophy: it is the attentive inspector that observes e
 
 ## Research
 
-An academic paper on PRANIDHI is in preparation for submission to an IEEE/Elsevier venue. It is not yet public; this repository is the primary source of truth for the framework's design and behaviour.
+A paper describing PRANIDHI, "Enterprise Large Language Model Governance: A Systematic Survey and Coaching-Augmented Pre-Prompt Risk Mitigation Framework," is currently under review at *Information and Software Technology* (Elsevier). It is not yet accepted or published; this repository remains the primary, reproducible source of truth for the framework's design and behaviour.
 
 ### Reproducible evaluation
 
@@ -203,11 +203,14 @@ Key areas where help is needed:
 ## Citation
 
 ```bibtex
-@article{pranidhi2026,
-  title={PRANIDHI: A Pre-Prompt Data Governance and Coaching Framework 
-         for Securing Enterprise Interactions with Large Language Models},
-  author={[Authors]},
-  journal={[Venue]},
+@unpublished{gentyala2026pranidhi,
+  title={Enterprise Large Language Model Governance: A Systematic Survey
+         and Coaching-Augmented Pre-Prompt Risk Mitigation Framework},
+  author={Gentyala, Sunil and Shariff, Vahiduddin and Gottemukkala, Lavanya
+          and Sujitha, M. Jeevana and Rajkumar, K. Varada
+          and Rao, Bagadi Gowrisankara},
+  note={Manuscript submitted for publication to Information and Software
+        Technology (Elsevier)},
   year={2026}
 }
 ```

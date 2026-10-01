@@ -1,5 +1,5 @@
 """
-PranidhiPipeline — the primary entry point for scanning prompts.
+PranidhiPipeline: the primary entry point for scanning prompts.
 
 Orchestrates the five-layer architecture:
   IDL → CRSE → NudgingEngine → PEOL → TAALL

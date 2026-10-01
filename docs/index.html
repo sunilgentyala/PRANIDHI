@@ -4,7 +4,8 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PRANIDHI: Pre-Prompt Coaching for Enterprise AI</title>
-  <meta name="description" content="PRANIDHI is a pre-prompt coaching framework that teaches enterprise users to rewrite risky AI prompts safely, instead of just blocking them."/>
+  <meta name="description" content="PRANIDHI is an open-source pre-prompt coaching framework for enterprise AI. It scores risky prompts, coaches users toward safer phrasing, and enforces tightening-only policy tiers. v0.2.0 is security-hardened and ships reproducible benchmarks."/>
+  <meta name="theme-color" content="#993C1D"/>
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
   <link rel="alternate icon" href="favicon.ico"/>
@@ -14,247 +15,204 @@
 
   <meta property="og:type" content="website"/>
   <meta property="og:title" content="PRANIDHI: Pre-Prompt Coaching for Enterprise AI"/>
-  <meta property="og:description" content="Teaches users to rewrite risky prompts safely, in real time, instead of just blocking them. A five-layer middleware pipeline with a real-time nudging engine."/>
+  <meta property="og:description" content="Coaches users to rewrite risky prompts instead of only blocking them. Five-layer pipeline, security-hardened v0.2.0, reproducible benchmarks."/>
   <meta property="og:image" content="https://sunilgentyala.github.io/PRANIDHI/assets/og-image.png"/>
   <meta property="og:url" content="https://sunilgentyala.github.io/PRANIDHI/"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="PRANIDHI: Pre-Prompt Coaching for Enterprise AI"/>
-  <meta name="twitter:description" content="Teaches users to rewrite risky prompts safely, instead of just blocking them."/>
+  <meta name="twitter:description" content="Coaches users to rewrite risky prompts instead of only blocking them."/>
   <meta name="twitter:image" content="https://sunilgentyala.github.io/PRANIDHI/assets/og-image.png"/>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 
     :root {
-      --bg: #f9f8f5;
-      --ink: #1a1a18;
-      --muted: #6b6a64;
-      --line: #e5e3dc;
-      --card: #ffffff;
-      --accent: #993C1D;
-      --accent-2: #D85A30;
+      --bg: #f9f8f5; --bg2: #ffffff; --ink: #1a1a18; --muted: #6b6a64; --line: #e5e3dc;
+      --card: #ffffff; --accent: #993C1D; --accent-2: #D85A30; --accent-soft: #faeae7;
+      --link: #185fa5; --good: #0f6e56; --bad: #c1443a; --warn: #8a5d00; --code-bg: #1d1c1a; --code-ink: #f1efe8;
+      --bar-old: #c9c6bb; --bar-new: #993C1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #161614; --bg2: #1e1d1b; --ink: #f1efe8; --muted: #a8a69d; --line: #34322e; --card: #1e1d1b;
+        --accent: #f08a62; --accent-2: #f5a07c; --accent-soft: #3a2118; --link: #7db7f0; --good: #5fd0ae; --bad: #f0857b; --warn: #e8b84f;
+        --code-bg: #0e0e0d; --bar-old: #5a5851; --bar-new: #f08a62;
+      }
     }
 
-    body {
-      font-family: -apple-system, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      min-height: 100vh;
-      line-height: 1.5;
-    }
+    body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; }
+    a { color: var(--link); }
+    code, pre { font-family: ui-monospace, "SF Mono", Consolas, monospace; }
 
-    a { color: #185fa5; }
-
-    /* ---------- Nav ---------- */
-    nav {
-      background: #fff;
-      border-bottom: 1px solid var(--line);
-      padding: 14px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+    nav { background: var(--bg2); border-bottom: 1px solid var(--line); padding: 12px 32px; display: flex; align-items: center;
+          justify-content: space-between; flex-wrap: wrap; gap: 10px; position: sticky; top: 0; z-index: 20; }
     nav .brand { display: flex; align-items: center; gap: 10px; }
     nav .brand img { width: 30px; height: 30px; border-radius: 8px; }
-    nav .brand span { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
-    nav .links { display: flex; gap: 20px; font-size: 13.5px; }
+    nav .brand span { font-weight: 700; font-size: 16px; }
+    nav .brand em { font-style: normal; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-soft);
+                    border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
+    nav .links { display: flex; gap: 18px; font-size: 13.5px; flex-wrap: wrap; }
     nav .links a { text-decoration: none; color: var(--ink); font-weight: 500; }
     nav .links a:hover { color: var(--accent); }
 
-    /* ---------- Hero ---------- */
-    .hero {
-      background: radial-gradient(circle at 82% -10%, #fceee7 0%, var(--bg) 55%);
-      padding: 72px 32px 56px;
-      text-align: center;
-    }
-    .hero .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #faeae7; color: var(--accent); border: 1px solid #f0d3ca;
-      padding: 6px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 600;
-      letter-spacing: 0.02em; margin-bottom: 22px;
-    }
-    .hero .badge svg { width: 14px; height: 14px; }
-    .hero img.logo { width: 88px; height: 88px; border-radius: 22px; margin-bottom: 20px; }
-    .hero h1 {
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px;
-    }
-    .hero .deva { color: var(--muted); font-size: 16px; margin-bottom: 20px; }
-    .hero p.tagline {
-      max-width: 640px; margin: 0 auto 32px; color: #454540; font-size: 18px; line-height: 1.6;
-    }
-    .hero .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
-    .btn {
-      display: inline-block; padding: 12px 22px; border-radius: 9px; font-size: 14.5px;
-      font-weight: 600; text-decoration: none; transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .btn-primary { background: var(--ink); color: #fff; }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
-    .btn-secondary { background: #fff; color: var(--ink); border: 1px solid var(--line); }
-    .btn-secondary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+    .hero { background: radial-gradient(circle at 82% -10%, var(--accent-soft) 0%, var(--bg) 58%); padding: 68px 32px 52px; text-align: center; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--line);
+            padding: 6px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 600; margin-bottom: 20px; text-decoration: none; }
+    .hero img.logo { width: 84px; height: 84px; border-radius: 21px; margin-bottom: 18px; display: block; margin-inline: auto; }
+    .hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .hero .deva { color: var(--muted); font-size: 16px; margin-bottom: 18px; }
+    .hero p.tagline { max-width: 660px; margin: 0 auto 28px; color: var(--ink); opacity: .85; font-size: 18px; line-height: 1.6; }
+    .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+    .btn { display: inline-block; padding: 12px 22px; border-radius: 9px; font-size: 14.5px; font-weight: 600; text-decoration: none;
+           transition: transform .15s ease, box-shadow .15s ease; }
+    .btn-primary { background: var(--ink); color: var(--bg); }
+    .btn-secondary { background: var(--bg2); color: var(--ink); border: 1px solid var(--line); }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.15); }
 
-    .stats { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; }
-    .stat { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 22px; min-width: 200px; text-align: left; }
-    .stat b { display: block; font-size: 22px; color: var(--accent); }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; max-width: 1000px; margin: 0 auto; }
+    .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; text-align: left; }
+    .stat b { display: block; font-size: 26px; color: var(--accent); letter-spacing: -0.01em; }
     .stat span { font-size: 12.5px; color: var(--muted); }
+    .fine { font-size: 12px; color: var(--muted); margin-top: 14px; }
 
-    /* ---------- Section shells ---------- */
-    section.block { padding: 56px 32px; max-width: 1080px; margin: 0 auto; }
-    section.block h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; text-align: center; }
-    section.block p.lead { text-align: center; color: var(--muted); max-width: 620px; margin: 0 auto 32px; font-size: 15px; }
+    section.block { padding: 58px 32px; max-width: 1080px; margin: 0 auto; }
+    section.block h2 { font-size: 27px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; text-align: center; }
+    section.block p.lead { text-align: center; color: var(--muted); max-width: 680px; margin: 0 auto 30px; font-size: 15px; }
+    section.block.alt { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); max-width: none; margin: 0; }
+    .alt > .inner { max-width: 1080px; margin: 0 auto; }
 
-    /* ---------- Nudging strategy cards ---------- */
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
-    .card {
-      background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px;
-    }
-    .card .num {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 26px; height: 26px; border-radius: 7px; background: #faeae7; color: var(--accent);
-      font-size: 12px; font-weight: 700; margin-bottom: 12px;
-    }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+    .card .num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 7px;
+                 background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 700; margin-bottom: 12px; }
     .card h3 { font-size: 15.5px; margin-bottom: 6px; }
-    .card p { font-size: 13.5px; color: #555; margin-bottom: 10px; }
-    .card .ex { font-size: 12.5px; background: #faf9f6; border: 1px solid #eee; border-radius: 8px; padding: 8px 10px; color: #444; }
+    .card p { font-size: 13.5px; color: var(--muted); margin-bottom: 10px; }
+    .card .ex { font-size: 12.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+    .note { max-width: 780px; margin: 22px auto 0; font-size: 13px; color: var(--muted); background: var(--accent-soft);
+            border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
 
-    /* ---------- Diagram section ---------- */
-    .diagram-wrap {
-      background: #fff; border: 1px solid var(--line); border-radius: 14px;
-      overflow: hidden;
-    }
-    .hint {
-      text-align: center; font-size: 12px; color: var(--muted); padding: 10px; letter-spacing: 0.02em;
-      border-bottom: 1px solid var(--line);
-    }
+    .diagram-wrap { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; color: #1a1a18; }
+    .hint { text-align: center; font-size: 12px; color: #6b6a64; padding: 10px; border-bottom: 1px solid #e5e3dc; }
     .layout { display: flex; min-height: 620px; }
     .diagram-pane { flex: 1; padding: 24px; display: flex; flex-direction: column; align-items: center; overflow: auto; }
     .diagram-pane svg { max-width: 680px; width: 100%; }
-    .diagram-pane svg g[onclick] { cursor: pointer; }
-    .diagram-pane svg g[onclick]:hover rect:first-child,
     .diagram-pane svg g[onclick]:hover rect:first-of-type { filter: brightness(0.93); }
-
-    .info-panel {
-      width: 340px; min-width: 280px; background: #fff; border-left: 1px solid var(--line);
-      padding: 28px 24px; overflow-y: auto;
-    }
+    .info-panel { width: 340px; min-width: 280px; background: #fff; border-left: 1px solid #e5e3dc; padding: 28px 24px; overflow-y: auto; }
     .info-panel.empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #aaa; gap: 12px; }
-    .info-panel.empty svg { opacity: 0.3; }
-    .layer-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; margin-bottom: 12px; }
+    .info-panel.empty svg { opacity: .3; }
+    .layer-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; margin-bottom: 12px; }
     .info-panel h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; text-align: left; }
     .info-panel .subtitle { font-size: 12px; color: #666; margin-bottom: 16px; }
     .info-panel p { font-size: 13px; line-height: 1.65; color: #3a3a38; margin-bottom: 14px; }
-    .info-panel h3 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin: 18px 0 8px; }
+    .info-panel h3 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: #888; margin: 18px 0 8px; }
     .info-panel ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
     .info-panel ul li { font-size: 13px; color: #3a3a38; padding: 6px 10px; border-radius: 5px; border: 1px solid #e8e6df; background: #faf9f6; line-height: 1.4; }
     .info-panel ul li strong { display: block; font-size: 12px; margin-bottom: 2px; }
 
-    /* ---------- Comparison table ---------- */
-    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
-    table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: #fff; }
-    th, td { padding: 11px 14px; border-bottom: 1px solid var(--line); text-align: center; white-space: nowrap; }
-    th:first-child, td:first-child { text-align: left; white-space: normal; }
-    thead th { background: #faf9f6; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
-    td.yes { color: #0f6e56; font-weight: 700; }
-    td.no { color: #c1443a; }
-    th.us, td.us { background: #faeae7; font-weight: 700; color: var(--accent); }
+    .fig { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px; }
+    .fig img { width: 100%; height: auto; display: block; }
+    .fig-cap { text-align: center; font-size: 12.5px; color: var(--muted); margin: 10px 0 24px; }
+    .threats { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+    .threat { background: var(--card); border: 1px solid var(--line); border-left-width: 4px; border-radius: 10px; padding: 14px 16px; font-size: 13.5px; }
+    .threat b { display: block; margin-bottom: 4px; }
+    .threat.ok { border-left-color: var(--good); } .threat.part { border-left-color: var(--warn); } .threat.open { border-left-color: var(--bad); }
+    .threat small { display: block; color: var(--muted); margin-top: 6px; font-size: 12.5px; }
 
-    footer {
-      border-top: 1px solid var(--line); padding: 36px 32px; text-align: center;
-      color: var(--muted); font-size: 13px;
-    }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 26px; }
+    .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .kpi b { display: block; font-size: 24px; color: var(--accent); }
+    .kpi span { font-size: 12.5px; color: var(--muted); }
+    .chart { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; }
+    .chart h3 { font-size: 15px; margin-bottom: 4px; }
+    .chart p.sub { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
+    .legend { display: flex; gap: 18px; font-size: 12.5px; margin-bottom: 14px; color: var(--muted); }
+    .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+    .bar-row { display: grid; grid-template-columns: 190px 1fr; gap: 12px; align-items: center; padding: 5px 0; }
+    .bar-row.resid .bar-label::after { content: " (residual)"; color: var(--bad); font-size: 11.5px; }
+    .bar-label { font-size: 13px; }
+    .bars { display: flex; flex-direction: column; gap: 3px; }
+    .bar { height: 15px; border-radius: 4px; position: relative; min-width: 28px; }
+    .bar span { position: absolute; left: 100%; top: 0; margin-left: 6px; font-size: 11.5px; line-height: 15px; color: var(--muted); }
+    .bar.old { background: var(--bar-old); } .bar.new { background: var(--bar-new); }
+    .callout { margin-top: 22px; border: 1px solid var(--line); border-left: 4px solid var(--warn); background: var(--card); border-radius: 10px; padding: 14px 18px; font-size: 13.5px; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--card); }
+    th, td { padding: 11px 14px; border-bottom: 1px solid var(--line); text-align: center; }
+    th:first-child, td:first-child { text-align: left; }
+    thead th { background: var(--bg); font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); }
+    td.yes { color: var(--good); font-weight: 700; } td.nd { color: var(--muted); font-size: 12.5px; } td.part { color: var(--warn); font-weight: 600; }
+    th.us, td.us { background: var(--accent-soft); font-weight: 700; color: var(--accent); }
+
+    .code { position: relative; background: var(--code-bg); color: var(--code-ink); border-radius: 12px; padding: 18px 20px; font-size: 13px; line-height: 1.6; overflow-x: auto; margin-bottom: 14px; }
+    .code .cm { color: #8f8d85; }
+    .copy { position: absolute; top: 10px; right: 10px; background: #34322e; color: #f1efe8; border: 0; border-radius: 6px; font-size: 11.5px; padding: 4px 9px; cursor: pointer; }
+    .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+    .out-label { font-size: 12px; color: var(--muted); margin: 4px 0 6px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+
+    footer { border-top: 1px solid var(--line); padding: 36px 32px; text-align: center; color: var(--muted); font-size: 13px; }
     footer .flinks { display: flex; gap: 18px; justify-content: center; margin-bottom: 14px; flex-wrap: wrap; }
     footer .flinks a { text-decoration: none; font-weight: 600; color: var(--ink); }
     footer .flinks a:hover { color: var(--accent); }
 
     @media (max-width: 680px) {
-      .layout { flex-direction: column; }
-      .info-panel { width: 100%; border-left: none; border-top: 1px solid var(--line); }
+      .layout { flex-direction: column; } .info-panel { width: 100%; border-left: 0; border-top: 1px solid #e5e3dc; }
+      .bar-row { grid-template-columns: 1fr; gap: 4px; } nav { padding: 12px 18px; } section.block { padding: 44px 18px; }
     }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="brand">
-    <img src="assets/icon-192.png" alt="PRANIDHI"/>
-    <span>प्रणिधि PRANIDHI</span>
-  </div>
+  <div class="brand"><img src="assets/icon-192.png" alt="PRANIDHI"/><span>PRANIDHI</span><em>v0.2.0</em></div>
   <div class="links">
-    <a href="#architecture">Architecture</a>
-    <a href="#nudging">Nudging Engine</a>
-    <a href="#compare">Comparison</a>
-    <a href="https://github.com/sunilgentyala/PRANIDHI" target="_blank">GitHub →</a>
+    <a href="#nudging">Nudging</a><a href="#architecture">Architecture</a><a href="#security">Security</a>
+    <a href="#results">Results</a><a href="#compare">Compare</a><a href="#quickstart">Quick start</a>
+    <a href="https://github.com/sunilgentyala/PRANIDHI" target="_blank" rel="noopener">GitHub &rarr;</a>
   </div>
 </nav>
 
-<section class="hero">
-  <div class="badge">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
-    Pre-prompt coaching, not just blocking
-  </div>
-  <br/>
+<header class="hero">
+  <a class="pill" href="https://github.com/sunilgentyala/PRANIDHI/releases/latest" target="_blank" rel="noopener">v0.2.0 &middot; security-hardened release &rarr;</a>
   <img class="logo" src="assets/icon-192.png" alt="PRANIDHI logo"/>
   <h1>PRANIDHI</h1>
   <div class="deva">प्रणिधि &middot; "the inspector; attentive watchfulness"</div>
-  <p class="tagline">
-    A five-layer middleware pipeline that scans, scores, and <strong>coaches</strong> enterprise AI
-    prompts in real time: teaching users to rewrite risky prompts safely instead of just blocking them.
-  </p>
+  <p class="tagline">An open-source, five-layer pipeline that scores enterprise AI prompts and <strong>coaches</strong> users toward safer phrasing, instead of only blocking them.</p>
   <div class="cta">
-    <a class="btn btn-primary" href="#architecture">View Interactive Architecture</a>
-    <a class="btn btn-secondary" href="https://github.com/sunilgentyala/PRANIDHI" target="_blank">View on GitHub</a>
+    <a class="btn btn-primary" href="#architecture">Explore the architecture</a>
+    <a class="btn btn-secondary" href="https://github.com/sunilgentyala/PRANIDHI" target="_blank" rel="noopener">View on GitHub</a>
   </div>
   <div class="stats">
-    <div class="stat"><b>13%</b><span>of enterprise AI prompts contain sensitive data (Lasso Security, 2025)</span></div>
-    <div class="stat"><b>38%</b><span>of employees input sensitive data into unauthorised AI tools (IBM, 2025)</span></div>
-    <div class="stat"><b>$670K</b><span>added to average breach cost by shadow AI (IBM, 2025)</span></div>
+    <div class="stat"><b>97.9%</b><span>credential blocking under 8 evasion transformations (about 12% in v0.1.0)</span></div>
+    <div class="stat"><b>49 of 69</b><span>percentage points of would-be blocks turned into coached pass-throughs</span></div>
+    <div class="stat"><b>0.89 F1</b><span>detection on a 400-prompt synthetic corpus (recall 0.83, precision 0.96)</span></div>
+    <div class="stat"><b>77 tests</b><span>passing; ruff and mypy clean; CI on Python 3.10 to 3.12</span></div>
   </div>
-</section>
+  <p class="fine">All figures are measured on synthetic, templated prompts and reproduce with one command each. See <a href="#results">Results</a> for caveats.</p>
+</header>
 
 <section class="block" id="nudging">
   <h2>The Nudging Engine</h2>
-  <p class="lead">PRANIDHI's core innovation: instead of an opaque "blocked," it offers real-time coaching through four intervention strategies.</p>
+  <p class="lead">Instead of an opaque "blocked," PRANIDHI offers up to three suggestions from four strategies, before enforcement.</p>
   <div class="cards">
-    <div class="card">
-      <div class="num">1</div>
-      <h3>Substitutive Reformulation</h3>
-      <p>Replaces real data with synthetic equivalents.</p>
-      <div class="ex">"Analyse Client-A's $2.3M contract" → "Analyse a mid-size client contract in the $2-3M range"</div>
-    </div>
-    <div class="card">
-      <div class="num">2</div>
-      <h3>Decomposition</h3>
-      <p>Splits a risky multi-entity prompt into safe sub-queries.</p>
-      <div class="ex">One prompt with names + revenue + strategy → three separate safe prompts</div>
-    </div>
-    <div class="card">
-      <div class="num">3</div>
-      <h3>Abstraction Elevation</h3>
-      <p>Lifts specific instances to general patterns.</p>
-      <div class="ex">"Why did Acme Corp's Q3 revenue drop 14.7%?" → "What frameworks analyse 10-20% revenue declines?"</div>
-    </div>
-    <div class="card">
-      <div class="num">4</div>
-      <h3>Tool Redirection</h3>
-      <p>Routes the request to a safer execution path.</p>
-      <div class="ex">"Use the internal sandbox model instead" or "Query the approved knowledge base"</div>
-    </div>
+    <div class="card"><div class="num">1</div><h3>Substitutive Reformulation</h3><p>Replaces flagged fragments with typed placeholders so the user sees what a safe version looks like.</p><div class="ex"><code>[REDACTED-PII]</code> &middot; <code>[REDACTED-CREDENTIAL]</code></div></div>
+    <div class="card"><div class="num">2</div><h3>Decomposition</h3><p>Splits a multi-entity prompt into independent sub-queries so no single interaction holds the whole risk.</p><div class="ex">names + revenue + strategy &rarr; three separate prompts</div></div>
+    <div class="card"><div class="num">3</div><h3>Abstraction Elevation</h3><p>Lifts an instance-level question to a pattern-level one with no residual link to a real entity.</p><div class="ex">"Why did Acme Corp's Q3 revenue drop 14.7%?" &rarr; "What frameworks diagnose a single quarter's revenue contraction of this size?"</div></div>
+    <div class="card"><div class="num">4</div><h3>Tool Redirection</h3><p>Routes the user to a safer path. Credentials never go to an external model.</p><div class="ex">"Use your organisation's secrets manager or internal vault."</div></div>
   </div>
+  <p class="note"><b>Honest scope.</b> In v0.2.0 these strategies are deterministic and template-based: no language model is called and confidence values are fixed design constants. A generative coaching model is on the roadmap and needs its own leakage safeguards.</p>
 </section>
 
-<section class="block" id="architecture">
-  <h2>Five-Layer Architecture</h2>
-  <p class="lead">Click any layer in the diagram to see what it does.</p>
+<section class="block alt" id="architecture"><div class="inner">
+  <h2>Five-layer architecture</h2>
+  <p class="lead">Click any layer to see what it does and what it does not do.</p>
   <div class="diagram-wrap">
     <p class="hint">Click any layer in the diagram to learn more</p>
     <div class="layout">
       <div class="diagram-pane">
-        <svg width="100%" viewBox="0 0 680 620" xmlns="http://www.w3.org/2000/svg">
+<svg width="100%" viewBox="0 0 680 620" xmlns="http://www.w3.org/2000/svg">
 <defs>
   <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
     <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -343,135 +301,206 @@
 <text x="298" y="581" style="fill:rgb(61,61,58);font-size:12px;font-family:-apple-system,'Segoe UI',sans-serif">Red: block + guide</text>
         </svg>
       </div>
-
       <div class="info-panel empty" id="panel">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <p>Click a layer in the diagram to see its description.</p>
       </div>
     </div>
   </div>
+</div></section>
+
+<section class="block" id="security">
+  <h2>Security posture</h2>
+  <p class="lead">A guardrail is itself an attack surface. v0.2.0 models three trust boundaries and six threats to PRANIDHI itself, each with a regression test or a stated residual risk.</p>
+  <div class="fig"><img src="architecture/pranidhi-architecture-v0.2.png" alt="PRANIDHI v0.2 architecture showing trust boundaries TB-1 to TB-3, per-layer security controls, and threats E1 to E6" loading="lazy"/></div>
+  <p class="fig-cap">Trust boundaries (TB-1 untrusted input, TB-2 identity and policy attributes, TB-3 egress), per-layer controls, and the attack surface of the guardrail itself.</p>
+  <div class="threats">
+    <div class="threat ok"><b>E1 Input obfuscation</b>NFKC fold, strip format characters, decode percent, hex and Base64 as appended views, vendor credential patterns.<small>Residual: reversal, ROT13, paraphrase.</small></div>
+    <div class="threat ok"><b>E2 Policy tampering</b>Department thresholds clamped to the floor, policy cannot remove <code>CREDENTIAL</code>, fail-closed loading.<small>Residual: protect the policy file at deployment.</small></div>
+    <div class="threat part"><b>E3 Identity spoofing</b>Role and department are caller-supplied input.<small>Residual: bind them to an authenticated identity provider.</small></div>
+    <div class="threat ok"><b>E4 Feedback poisoning</b>Adaptive thresholds are advisory and clamped to the enterprise floor.<small>Residual: human review of proposals.</small></div>
+    <div class="threat ok"><b>E5 Telemetry leakage</b>HMAC-SHA256 user pseudonyms; no prompt text in records or the audit log.<small>Residual: key management.</small></div>
+    <div class="threat open"><b>E6 Semantic evasion</b>Out of scope for deterministic detection.<small>Open: needs a semantic detector.</small></div>
+  </div>
 </section>
 
-<section class="block" id="compare">
-  <h2>How It Compares</h2>
-  <p class="lead">Every existing AI guardrail scans and blocks. PRANIDHI is the only one that coaches.</p>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Capability</th>
-          <th>Zscaler AI Guard</th>
-          <th>Nightfall AI</th>
-          <th>Lasso Security</th>
-          <th>NeMo Guardrails</th>
-          <th class="us">PRANIDHI</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>PII/PHI Detection</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="us yes">✓</td></tr>
-        <tr><td>Prompt Blocking</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="us yes">✓</td></tr>
-        <tr><td>Data Masking/Redaction</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">✗</td><td class="us yes">✓</td></tr>
-        <tr><td>Real-Time Prompt Coaching</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="us yes">✓</td></tr>
-        <tr><td>Reformulation Suggestions</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="us yes">✓</td></tr>
-        <tr><td>Inferential Leakage Scoring</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="us yes">✓</td></tr>
-        <tr><td>Cross-Platform Normalisation</td><td>Partial</td><td class="no">✗</td><td>Partial</td><td class="no">✗</td><td class="us yes">✓</td></tr>
-        <tr><td>Behavioural Learning Loop</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="us yes">✓</td></tr>
-        <tr><td>Federated Policy Hierarchies</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="us yes">✓</td></tr>
-        <tr><td>Open Source</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="us yes">✓</td></tr>
-      </tbody>
-    </table>
+<section class="block alt" id="results"><div class="inner">
+  <h2>Measured results</h2>
+  <p class="lead">Three seeded, fully synthetic evaluations of the real pipeline. Each reproduces with one command.</p>
+  <div class="kpis">
+    <div class="kpi"><b>31 / 49 / 20%</b><span>GREEN / AMBER / RED on 400 prompts (baseline RED 69%)</span></div>
+    <div class="kpi"><b>0.96 / 0.83</b><span>precision / recall (F1 0.888); recall 1.00 on credential, PII and code prompts, 0.31 on inferential leakage</span></div>
+    <div class="kpi"><b>0.83 to 0.91</b><span>F1 across 25 weight and threshold configurations</span></div>
+    <div class="kpi"><b>0.075 ms</b><span>mean latency per scan, in-process Python (p95 0.100 ms)</span></div>
   </div>
+  <div class="chart">
+    <h3>Credential blocking under evasion</h3>
+    <p class="sub">Share of synthetic credentials blocked by the Tier 1 floor (120 trials per transformation), v0.1.0 versus v0.2.0.</p>
+    <div class="legend"><span><i style="background:var(--bar-old)"></i>v0.1.0</span><span><i style="background:var(--bar-new)"></i>v0.2.0</span></div>
+<div class="bar-row"><div class="bar-label">T0 plain (control)</div>
+      <div class="bars"><div class="bar old" style="width:15.7%"><span>0.17</span></div>
+      <div class="bar new" style="width:90.0%"><span>1.00</span></div></div></div>
+<div class="bar-row"><div class="bar-label">T1 zero-width injection</div>
+      <div class="bars"><div class="bar old" style="width:18.7%"><span>0.21</span></div>
+      <div class="bar new" style="width:90.0%"><span>1.00</span></div></div></div>
+<div class="bar-row"><div class="bar-label">T2 Cyrillic homoglyphs</div>
+      <div class="bars"><div class="bar old" style="width:17.3%"><span>0.19</span></div>
+      <div class="bar new" style="width:90.0%"><span>1.00</span></div></div></div>
+<div class="bar-row"><div class="bar-label">T3 percent-encoding</div>
+      <div class="bars"><div class="bar old" style="width:17.3%"><span>0.19</span></div>
+      <div class="bar new" style="width:90.0%"><span>1.00</span></div></div></div>
+<div class="bar-row"><div class="bar-label">T4 Base64 wrapping</div>
+      <div class="bars"><div class="bar old" style="width:18.0%"><span>0.20</span></div>
+      <div class="bar new" style="width:90.0%"><span>1.00</span></div></div></div>
+<div class="bar-row"><div class="bar-label">T5 fullwidth forms</div>
+      <div class="bars"><div class="bar old" style="width:1.2%"><span>0.00</span></div>
+      <div class="bar new" style="width:90.0%"><span>1.00</span></div></div></div>
+<div class="bar-row"><div class="bar-label">T6 character spacing</div>
+      <div class="bars"><div class="bar old" style="width:1.2%"><span>0.00</span></div>
+      <div class="bar new" style="width:75.0%"><span>0.83</span></div></div></div>
+<div class="bar-row"><div class="bar-label">T7 hexadecimal</div>
+      <div class="bars"><div class="bar old" style="width:1.2%"><span>0.00</span></div>
+      <div class="bar new" style="width:90.0%"><span>1.00</span></div></div></div>
+<div class="bar-row resid"><div class="bar-label">T8 reversed string</div>
+      <div class="bars"><div class="bar old" style="width:4.5%"><span>0.05</span></div>
+      <div class="bar new" style="width:4.5%"><span>0.05</span></div></div></div>
+<div class="bar-row resid"><div class="bar-label">T9 ROT13</div>
+      <div class="bars"><div class="bar old" style="width:3.8%"><span>0.04</span></div>
+      <div class="bar new" style="width:3.8%"><span>0.04</span></div></div></div>
+  </div>
+  <div class="callout"><b>Correction to v0.1.0.</b> v0.1.0 reported recall 0.9125 and F1 0.9359. Part of that was an artefact: the code-snippet detector matched bare English words such as "drop" and "from", accidentally flagging some non-code prompts. v0.2.0 detects code structurally, so recall is 0.8281 and F1 0.8878, the honest figures. RED is exactly 20% in all 25 sensitivity configurations because the only remaining blocks are Tier 1 credential blocks, so the conversion of blocks into coaching is structural, not tuned. The transformations were written by the same authors as the defences: this measures coverage of known tricks, not resistance to an adaptive adversary.</div>
+</div></section>
+
+<section class="block" id="compare">
+  <h2>How it compares</h2>
+  <p class="lead">Capabilities are from each product's public documentation as reviewed for the accompanying paper. "Not documented" means not found, not proven absent.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Capability</th><th>Zscaler AI Guard</th><th>Nightfall AI</th><th>Lasso Security</th><th>NeMo Guardrails</th><th class="us">PRANIDHI</th></tr></thead>
+    <tbody>
+      <tr><td>Sensitive-data detection</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td class="us yes">&#10003;</td></tr>
+      <tr><td>Prompt blocking</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td class="yes">&#10003;</td><td class="us yes">&#10003;</td></tr>
+      <tr><td>Advisory coaching instead of block or allow</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="us yes">&#10003; template-based</td></tr>
+      <tr><td>Inferential-leakage scoring</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="us part">coarse entropy proxy</td></tr>
+      <tr><td>Federated, tightening-only policy tiers</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="us yes">&#10003;</td></tr>
+      <tr><td>Telemetry-driven recalibration</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="us part">advisory only</td></tr>
+      <tr><td>Open source, auditable detection</td><td class="nd">No</td><td class="nd">No</td><td class="nd">No</td><td class="yes">&#10003;</td><td class="us yes">&#10003;</td></tr>
+      <tr><td>Independent benchmark outside vendor material</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="nd">Not documented</td><td class="yes">&#10003; jailbreak filtering</td><td class="us part">synthetic only</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="block alt" id="quickstart"><div class="inner">
+  <h2>Quick start</h2>
+  <p class="lead">Python 3.10 or newer. The output shown is real v0.2.0 output.</p>
+  <div class="code" id="c1"><button class="copy" data-target="c1">Copy</button><pre>git clone https://github.com/sunilgentyala/PRANIDHI.git
+cd PRANIDHI
+pip install -e ".[dev]"
+pytest tests/ -q        <span class="cm"># 77 passed</span></pre></div>
+  <div class="two">
+    <div>
+      <div class="out-label">Code</div>
+      <div class="code" id="c2"><button class="copy" data-target="c2">Copy</button><pre>from pranidhi import PranidhiPipeline
+
+pipeline = PranidhiPipeline(
+    policy_path="policies/default.yaml")
+
+r = pipeline.scan(
+    "Analyse John Smith's account #4521-8876 "
+    "for fraud patterns",
+    {"role": "analyst", "department": "risk",
+     "target_platform": "claude"})
+
+print(r.disposition.value, round(r.risk_score, 3))
+for s in r.suggestions:
+    print(s.strategy.value, "|", s.confidence)</pre></div>
+    </div>
+    <div>
+      <div class="out-label">Output</div>
+      <div class="code"><pre>AMBER 0.552
+ABSTRACTION_ELEVATION | 0.7
+
+<span class="cm"># a prompt carrying a credential:</span>
+RED 0.723
+TOOL_REDIRECTION | 0.95</pre></div>
+      <p class="note" style="margin-top:0">The person's name is <b>not</b> detected: the pattern-based detectors cover credentials, account numbers, SSNs, emails, phone numbers, IPs and URLs, not names. This is a documented limitation.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="block" id="research">
+  <h2>Research</h2>
+  <p class="lead">A paper describing PRANIDHI, <em>Enterprise Large Language Model Governance: A Systematic Survey and Coaching-Augmented Pre-Prompt Risk Mitigation Framework</em>, is under review at <em>Information and Software Technology</em> (Elsevier). It is not yet accepted or published. This repository is the reproducible source of truth for the framework's behaviour.</p>
 </section>
 
 <footer>
   <div class="flinks">
-    <a href="https://github.com/sunilgentyala/PRANIDHI" target="_blank">GitHub</a>
-    <a href="https://github.com/sunilgentyala/PRANIDHI/blob/main/README.md#citation" target="_blank">Citation</a>
-    <a href="https://github.com/sunilgentyala/PRANIDHI/blob/main/LICENSE" target="_blank">Apache 2.0 License</a>
+    <a href="https://github.com/sunilgentyala/PRANIDHI" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/sunilgentyala/PRANIDHI/releases/latest" target="_blank" rel="noopener">Release v0.2.0</a>
+    <a href="https://github.com/sunilgentyala/PRANIDHI/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a>
+    <a href="https://github.com/sunilgentyala/PRANIDHI/blob/main/SECURITY.md" target="_blank" rel="noopener">Security</a>
+    <a href="https://github.com/sunilgentyala/PRANIDHI/blob/main/README.md#citation" target="_blank" rel="noopener">Citation</a>
+    <a href="https://github.com/sunilgentyala/PRANIDHI/blob/main/LICENSE" target="_blank" rel="noopener">Apache 2.0</a>
   </div>
   प्रणिधि PRANIDHI: the attentive inspector that teaches, not merely blocks.
 </footer>
 
 <script>
 const LAYERS = {
-  idl: {
-    tag: 'Layer 1', tagColor: '#185fa5', tagBg: '#e6f1fb',
-    title: 'IDL: Ingestion and Decomposition Layer',
-    subtitle: 'Structural decomposition and encoding normalisation',
-    body: 'The IDL is the entry point for all prompt traffic. It receives raw user input and transforms it into semantically discrete ContentBlocks for downstream processing.',
+  idl: { tag: 'Layer 1', tagColor: '#185fa5', tagBg: '#e6f1fb', title: 'IDL: Ingestion and Decomposition Layer',
+    subtitle: 'Canonicalisation before detection',
+    body: 'The IDL receives the raw prompt and produces typed ContentBlocks. The original text is never altered; decoded forms are appended as separate views.',
     bullets: [
-      { label: 'Encoding normalisation', detail: 'Strips zero-width characters, decodes Base64 fragments and URL-encoded sequences, normalises Unicode homoglyphs (Cyrillic/Latin lookalikes).' },
-      { label: 'PII detection', detail: 'Regex-based extraction of emails, SSNs, credit cards, account numbers, phone numbers, and IP addresses.' },
-      { label: 'Credential detection', detail: 'High-entropy pattern matching for API keys, tokens, secrets, and bearer credentials.' },
-      { label: 'Code detection', detail: 'Heuristic scanning for programming constructs (def, class, SELECT, etc.).' },
-    ]
-  },
-  crse: {
-    tag: 'Layer 2', tagColor: '#534ab7', tagBg: '#eeedfe',
-    title: 'CRSE: Classification and Risk Scoring Engine',
-    subtitle: 'Three-dimensional composite risk scoring',
-    body: 'The CRSE assigns a composite risk score to each ContentBlock across three independent dimensions, producing a GREEN / AMBER / RED disposition.',
+      { label: 'Encoding normalisation', detail: 'NFKC compatibility fold, removal of invisible format characters (Unicode category Cf), UTF-8 percent-decoding, Cyrillic and Greek confusable folding, collapse of character-spaced runs.' },
+      { label: 'Decoded views', detail: 'Hexadecimal and Base64 fragments that decode to printable text are appended after the original, so tokens such as JWTs are never corrupted.' },
+      { label: 'Typed detectors', detail: 'Vendor credential patterns (AWS, GitHub, Slack, Google, Stripe, JWT, PEM), generic API keys, credit cards, SSNs, account numbers, emails, phones, IPv4 and URLs.' },
+      { label: 'Structural code detection', detail: 'Definition headers, assignments and SQL statement pairs, not bare keywords that appear constantly in prose.' } ] },
+  crse: { tag: 'Layer 2', tagColor: '#534ab7', tagBg: '#eeedfe', title: 'CRSE: Classification and Risk Scoring Engine',
+    subtitle: 'Three-dimensional composite risk score',
+    body: 'Each block gets a deterministic score R = min(1, w1 s1 + w2 s2 + w3 s3) with default weights 0.40, 0.35, 0.25, mapped to GREEN below 0.30, AMBER below 0.70, RED otherwise.',
     bullets: [
-      { label: 'Data sensitivity', detail: 'How inherently sensitive is the content type? Credentials score highest, followed by PII, code, URLs, and free text.' },
-      { label: 'Exposure risk', detail: 'Adjusted by target platform (external LLM vs. internal sandbox) and user role (trained security analysts receive lower penalties).' },
-      { label: 'Inferential leakage', detail: 'Can the prompt leak sensitive information indirectly, even if no explicit PII is present? Scored separately to catch aggregation attacks.' },
-    ]
-  },
-  ne: {
-    tag: 'Layer 3: Core Innovation', tagColor: '#993c1d', tagBg: '#faeae7',
-    title: 'NE: Nudging Engine',
-    subtitle: 'Real-time prompt coaching with four intervention strategies',
-    body: 'Instead of blocking a risky prompt outright, the Nudging Engine offers the user a safer reformulation in real time: teaching them to work with AI rather than around guardrails.',
+      { label: 'Sensitivity (s1)', detail: 'A five-tier ordinal scale keyed by block type: credentials highest, then PII, code, URLs, free text.' },
+      { label: 'Contextual exposure (s2)', detail: 'Per-platform coefficient multiplied by a role modifier (0.8 for data-handling-trained roles, 1.2 otherwise).' },
+      { label: 'Inferential leakage (s3)', detail: 'A coarse Shannon-entropy proxy. It is cheap and deterministic but weak: recall on inferential financial-leak prompts is 0.31.' } ] },
+  ne: { tag: 'Layer 3: core idea', tagColor: '#993c1d', tagBg: '#faeae7', title: 'NE: Nudging Engine',
+    subtitle: 'Coaching before enforcement',
+    body: 'The engine produces up to three suggestions for every non-GREEN annotation before the policy layer decides, so a block can become a coached pass-through when a workable alternative exists.',
     bullets: [
-      { label: 'Substitutive Reformulation', detail: 'Replaces real data with synthetic equivalents. "Analyse Client-A\'s $2.3M contract" → "Analyse a mid-size client contract in the $2–3M range."' },
-      { label: 'Decomposition', detail: 'Splits one risky multi-entity prompt into several safe sub-queries, each containing only non-sensitive fragments.' },
-      { label: 'Abstraction Elevation', detail: 'Lifts specific instances to general patterns. "Why did Acme Corp\'s Q3 revenue drop 14.7%?" → "What frameworks analyse 10–20% revenue declines?"' },
-      { label: 'Tool Redirection', detail: 'Routes the request to a safer execution path: an internal sandbox model, an approved knowledge base, or a privacy-preserving API.' },
-    ]
-  },
-  peol: {
-    tag: 'Layer 4', tagColor: '#0f6e56', tagBg: '#e1f5ee',
-    title: 'PEOL: Policy Enforcement and Orchestration Layer',
-    subtitle: 'Federated policy hierarchy across three tiers',
-    body: 'The PEOL makes the final allow / coach / block decision by evaluating the risk annotations against a federated policy hierarchy. Policies compose: stricter tiers always win.',
+      { label: 'Substitutive Reformulation', detail: 'Typed placeholders such as [REDACTED-PII] replace flagged fragments.' },
+      { label: 'Decomposition', detail: 'Splits multi-entity prompts into independent sub-queries.' },
+      { label: 'Abstraction Elevation', detail: 'Lifts instance-level questions to pattern level.' },
+      { label: 'Tool Redirection', detail: 'Sends credentials and similar content to an approved internal path.' },
+      { label: 'Current limits', detail: 'All four are deterministic templates with fixed confidence values. No model is called, so no new exfiltration channel is introduced.' } ] },
+  peol: { tag: 'Layer 4', tagColor: '#0f6e56', tagBg: '#e1f5ee', title: 'PEOL: Policy Enforcement and Orchestration Layer',
+    subtitle: 'Federated, tightening-only policy tiers',
+    body: 'The PEOL resolves the final disposition. Tiers can only narrow the tier above them, with one audited exception.',
     bullets: [
-      { label: 'Enterprise floor', detail: 'Organisation-wide baseline rules set by the security team. No individual or business unit can relax these.' },
-      { label: 'Business unit rules', detail: 'Department-specific policies layered on top of the enterprise floor. A legal team might have stricter PII rules; a security team might have relaxed code-snippet rules.' },
-      { label: 'Role exemptions', detail: 'Fine-grained per-role overrides, e.g. a CISO can send prompts that a junior analyst cannot. Managed via YAML policy files.' },
-    ]
-  },
-  taall: {
-    tag: 'Layer 5', tagColor: '#3b6d11', tagBg: '#eaf3de',
-    title: 'TAALL: Telemetry, Analytics and Adaptive Learning Layer',
-    subtitle: 'Behavioural analytics and continuous threshold adaptation',
-    body: 'The TAALL collects structured telemetry on every scan and uses it to continuously improve PRANIDHI\'s detection thresholds and coaching effectiveness.',
+      { label: 'Tier 1: enterprise floor', detail: 'Credentials are always blocked. A policy file may add entity types to the floor but can never remove CREDENTIAL.' },
+      { label: 'Tier 2: business unit', detail: 'A department may set a stricter threshold. Any value looser than the 0.70 floor is clamped and logged.' },
+      { label: 'Tier 3: role exemptions', detail: 'Explicitly configured roles downgrade RED to AMBER, with an audit record. Exemptions never override Tier 1.' },
+      { label: 'Fail closed', detail: 'A missing or malformed policy file means no exemptions and no department overrides.' } ] },
+  taall: { tag: 'Layer 5', tagColor: '#3b6d11', tagBg: '#eaf3de', title: 'TAALL: Telemetry, Analytics and Adaptive Learning Layer',
+    subtitle: 'Privacy-preserving metrics',
+    body: 'The TAALL records one structured event per scan and aggregates prompt-hygiene metrics. It never stores prompt text.',
     bullets: [
-      { label: 'Behavioural analytics', detail: 'Tracks risk distributions per user, department, and platform over time to surface anomalies and high-risk actors.' },
-      { label: 'Adaptive thresholds', detail: 'Risk scoring thresholds drift toward historical norms: preventing alert fatigue while remaining sensitive to genuine outliers.' },
-      { label: 'Coaching effectiveness', detail: 'Measures which coaching strategies users actually accept vs. override, feeding back into strategy selection weights.' },
-      { label: 'Audit log', detail: 'Append-only structured event log for compliance reporting, incident response, and regulatory audits.' },
-    ]
-  }
+      { label: 'Pseudonymised identities', detail: 'User ids are replaced with HMAC-SHA256 pseudonyms; set PRANIDHI_TELEMETRY_KEY for stability across restarts.' },
+      { label: 'Aggregate metrics', detail: 'Disposition counts, average risk, top-risk departments and platforms, strategy frequencies.' },
+      { label: 'Advisory recalibration', detail: 'Threshold proposals are clamped to the enterprise floor and never auto-applied, so flooding the system with benign prompts cannot relax enforcement.' },
+      { label: 'Not yet implemented', detail: 'Coaching-acceptance tracking and cross-prompt correlation (threat T7) are architecturally provisioned but not built.' } ] }
 };
 
 function sendPrompt(key) {
-  const layer = LAYERS[key];
-  if (!layer) return;
+  const layer = LAYERS[key]; if (!layer) return;
   const panel = document.getElementById('panel');
   panel.classList.remove('empty');
-  panel.innerHTML = `
-    <span class="layer-tag" style="color:${layer.tagColor};background:${layer.tagBg}">${layer.tag}</span>
-    <h2>${layer.title}</h2>
-    <p class="subtitle">${layer.subtitle}</p>
-    <p>${layer.body}</p>
-    <h3>Key components</h3>
-    <ul>
-      ${layer.bullets.map(b => `<li><strong>${b.label}</strong>${b.detail}</li>`).join('')}
-    </ul>
-  `;
+  panel.innerHTML = `<span class="layer-tag" style="color:${layer.tagColor};background:${layer.tagBg}">${layer.tag}</span>
+    <h2>${layer.title}</h2><p class="subtitle">${layer.subtitle}</p><p>${layer.body}</p><h3>Key components</h3>
+    <ul>${layer.bullets.map(b => `<li><strong>${b.label}</strong>${b.detail}</li>`).join('')}</ul>`;
 }
+
+document.querySelectorAll('.copy').forEach(btn => btn.addEventListener('click', () => {
+  const el = document.querySelector('#' + btn.dataset.target + ' pre');
+  navigator.clipboard.writeText(el.innerText).then(() => { btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy', 1400); });
+}));
 </script>
 </body>
 </html>

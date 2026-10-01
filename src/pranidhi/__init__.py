@@ -1,6 +1,5 @@
 """
-PRANIDHI: Secure ENterprise Tokenisation, Inspection, and Nudging Engine
-for LLM Interactions.
+PRANIDHI: Prompt Risk Analysis, Network Inspection & Data Handling Integrity.
 
 A pre-prompt data governance and coaching framework that scans corporate
 user prompts before they reach external AI tools, and provides real-time

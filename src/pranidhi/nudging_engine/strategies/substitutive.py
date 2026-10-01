@@ -1,5 +1,5 @@
 """
-Substitutive Reformulation — replaces sensitive data with synthetic equivalents.
+Substitutive Reformulation: replaces sensitive data with synthetic equivalents.
 """
 
 from typing import ClassVar

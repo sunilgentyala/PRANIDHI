@@ -6,8 +6,8 @@ provides guidelines for contributing to the project.
 ## Development Setup
 
 ```bash
-git clone https://github.com/pranidhi-framework/pranidhi.git
-cd pranidhi
+git clone https://github.com/sunilgentyala/PRANIDHI.git
+cd PRANIDHI
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
@@ -28,18 +28,18 @@ mypy src/pranidhi/
 
 ## Areas Where Help Is Needed
 
-1. **Nudging Engine Strategies** — Improving the quality of reformulation
+1. **Nudging Engine Strategies**: Improving the quality of reformulation
    suggestions, particularly for domain-specific prompts.
 
-2. **Benchmark Corpus (SPHB)** — Contributing annotated enterprise prompts
+2. **Benchmark Corpus (SPHB)**: Contributing annotated enterprise prompts
    with sensitivity labels, risk scores, and gold-standard reformulations.
 
-3. **Platform Connectors** — Adding adapters for new AI platforms.
+3. **Platform Connectors**: Adding adapters for new AI platforms.
 
-4. **Multilingual Support** — Extending PII detection and coaching beyond
+4. **Multilingual Support**: Extending PII detection and coaching beyond
    English.
 
-5. **Evaluation** — Conducting and reporting user studies.
+5. **Evaluation**: Conducting and reporting user studies.
 
 ## Pull Request Guidelines
 
@@ -51,5 +51,5 @@ mypy src/pranidhi/
 
 ## Reporting Security Issues
 
-Please report security vulnerabilities to security@pranidhi-framework.org
+Please report security vulnerabilities privately, following SECURITY.md. Do not open a public issue.
 rather than opening a public issue.

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0
+## 0.2.0 (2026-10-01)
 
 ### Security
 - Normalisation: NFKC folding, removal of all Unicode format characters (category Cf), UTF-8 percent-decoding, extended Cyrillic and Greek confusable folding, hexadecimal and Base64 decoding as appended views, collapse of character-spaced runs.

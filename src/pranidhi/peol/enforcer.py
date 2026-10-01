@@ -1,5 +1,5 @@
 """
-Layer 4 — Policy Enforcement & Orchestration Layer (PEOL).
+Layer 4: Policy Enforcement & Orchestration Layer (PEOL).
 
 Implements federated governance hierarchy with three tiers:
   - Enterprise Floor Policies (immutable)
@@ -84,7 +84,7 @@ class PolicyEnforcer:
           3. Role-based exemptions
           4. Default to the highest risk annotation's disposition
         """
-        # Tier 1: Enterprise floor — absolute blocks
+        # Tier 1: Enterprise floor: absolute blocks
         for ann in annotations:
             for entity in ann.flagged_entities:
                 if entity in self._absolute_blocks:

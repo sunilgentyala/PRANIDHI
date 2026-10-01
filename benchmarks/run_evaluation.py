@@ -7,7 +7,7 @@ Usage:
 
 Writes benchmarks/results.json and prints a Markdown summary table.
 Every number here comes from actually executing src/pranidhi against
-benchmarks/corpus.py — nothing is hand-entered or assumed.
+benchmarks/corpus.py: nothing is hand-entered or assumed.
 """
 
 from __future__ import annotations

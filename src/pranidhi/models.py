@@ -77,10 +77,10 @@ class RiskScore:
     """
     Three-dimensional risk assessment produced by the CRSE.
 
-    Dimension 1 — Data Sensitivity: ordinal classification of data type.
-    Dimension 2 — Contextual Exposure Risk: probability of actionable harm
+    Dimension 1: Data Sensitivity: ordinal classification of data type.
+    Dimension 2: Contextual Exposure Risk: probability of actionable harm
                   given the target platform, user role, and data retention.
-    Dimension 3 — Inferential Leakage Potential: risk that sanitised data
+    Dimension 3: Inferential Leakage Potential: risk that sanitised data
                   could be reconstituted through model inference.
 
     The composite score is a normalised [0, 1] value derived from all three.
@@ -88,7 +88,7 @@ class RiskScore:
     sensitivity_tier: SensitivityTier
     exposure_risk: float        # [0, 1]
     inferential_leakage: float  # [0, 1]
-    composite: float            # [0, 1] — weighted combination
+    composite: float            # [0, 1]: weighted combination
 
     def __post_init__(self):
         for attr in ("exposure_risk", "inferential_leakage", "composite"):

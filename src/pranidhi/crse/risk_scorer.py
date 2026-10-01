@@ -1,5 +1,5 @@
 """
-Layer 2 — Classification & Risk Scoring Engine (CRSE).
+Layer 2: Classification & Risk Scoring Engine (CRSE).
 
 Applies three-dimensional risk assessment to each ContentBlock:
   Dimension 1: Data Sensitivity (five-tier ordinal scale)

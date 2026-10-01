@@ -1,5 +1,5 @@
 """
-Layer 1 — Ingestion & Decomposition Layer (IDL).
+Layer 1: Ingestion & Decomposition Layer (IDL).
 
 Receives raw user input and performs structural decomposition into
 semantically discrete ContentBlocks. Handles encoding normalisation,

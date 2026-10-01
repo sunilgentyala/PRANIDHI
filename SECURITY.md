@@ -12,25 +12,32 @@
 If you discover a security vulnerability in PRANIDHI, please report it
 responsibly. **Do not open a public GitHub issue.**
 
-Email: security@pranidhi-framework.org
+Use GitHub's private vulnerability reporting: open the repository's **Security** tab and choose **Report a vulnerability**
+(https://github.com/sunilgentyala/PRANIDHI/security/advisories/new). If that option is unavailable, contact the maintainer
+through the contact details on the maintainer's GitHub profile.
 
-We will acknowledge receipt within 48 hours and provide a detailed
-response within 7 days.
+This is a research project maintained by volunteers: we aim to acknowledge reports within a few days and will
+credit reporters unless they prefer otherwise.
 
 ## Security Design Principles
 
-PRANIDHI is designed with security-first principles:
+1. **No model call in the coaching path.** The four coaching strategies are
+   deterministic templates, so the Nudging Engine introduces no new
+   exfiltration channel. A future generative coaching model will need its own
+   isolation and leakage evaluation before it ships.
 
-1. **The coaching pipeline never transmits sensitive data externally.**
-   The Nudging Engine uses an internally-hosted model.
+2. **Telemetry holds no prompt text.** Records carry a keyed pseudonym
+   (HMAC-SHA256) instead of the user identifier. Export to disk happens only
+   when an export path is configured.
 
-2. **All telemetry is stored locally** by default. Export requires
-   explicit configuration.
+3. **Policies can only tighten.** Department thresholds are clamped to the
+   enterprise floor, the policy file cannot remove `CREDENTIAL` from the
+   absolute-block set, and a missing or malformed policy fails closed.
 
-3. **Policy configurations are validated** at startup to prevent
-   misconfigurations that could weaken protections.
-
-4. **Audit logs are immutable** once written.
+4. **Policy decisions are auditable.** Tier 1 blocks and Tier 3 exemptions are
+   written to an audit log that never contains prompt text. The log is held in
+   memory by the library; persisting it durably and tamper-evidently is the
+   deployer's responsibility.
 
 ## Threat Model of the Guardrail Itself (v0.2.0)
 

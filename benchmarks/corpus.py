@@ -1,5 +1,5 @@
 """
-PPHB-lite — a small, reproducible, fully-synthetic prompt corpus.
+PPHB-lite: a small, reproducible, fully-synthetic prompt corpus.
 
 Unlike the 10,247-prompt "PPHB" benchmark described in earlier project
 drafts (which was never actually built), this corpus is real: every prompt
@@ -39,7 +39,7 @@ ROLES = ["analyst", "engineer", "manager", "security", "legal_counsel", "intern"
 DEPARTMENTS = ["risk", "engineering", "sales", "compliance", "hr", "operations"]
 PLATFORMS = ["claude", "chatgpt", "perplexity", "grok", "gemini", "internal"]
 
-# Synthetic entities only — placeholder companies and example.com addresses.
+# Synthetic entities only: placeholder companies and example.com addresses.
 FAKE_COMPANIES = ["Acme Corp", "Globex", "Initech", "Umbrella Retail", "Wayne Logistics",
                    "Stark Diagnostics", "Wonka Foods", "Hooli Systems", "Soylent Health"]
 FAKE_NAMES = ["Jordan Lee", "Priya Anand", "Sam Whitfield", "Maria Gonzalez", "Tom O'Brien",
@@ -92,7 +92,7 @@ PII_TEMPLATES = [
 ]
 
 CREDENTIAL_TEMPLATES = [
-    "Here is our production key {key} — can you check why the integration is failing?",
+    "Here is our production key {key}: can you check why the integration is failing?",
     "Use this token to pull the latest report: {key}",
     "I think this API key {key} might be leaked, can you check the logs for misuse?",
 ]

@@ -34,7 +34,7 @@ class TestBaseline:
     def test_allows_clean_benign_prompt_in_low_risk_context(self):
         # Default UserContext carries an "unknown" platform and untrained role,
         # both of which inflate exposure risk by design (see risk_scorer.py's
-        # PLATFORM_RISK and role modifier) — a genuinely low-risk context is
+        # PLATFORM_RISK and role modifier): a genuinely low-risk context is
         # needed to observe a GREEN disposition even for benign content.
         baseline = ProhibitionOnlyBaseline()
         ctx = UserContext(user_id="test", role="security", target_platform="internal")

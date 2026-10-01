@@ -26,7 +26,7 @@ from pranidhi.peol.enforcer import PolicyEnforcer
 from pranidhi.taall.telemetry import TelemetryCollector
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 1: IDL — Decomposer Tests
+# Layer 1: IDL: Decomposer Tests
 # ═══════════════════════════════════════════════════════════════════
 
 class TestDecomposer:
@@ -100,7 +100,7 @@ class TestDecomposer:
 
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 2: CRSE — Risk Scorer Tests
+# Layer 2: CRSE: Risk Scorer Tests
 # ═══════════════════════════════════════════════════════════════════
 
 class TestRiskScorer:
@@ -291,7 +291,7 @@ class TestToolRedirector:
 
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 4: PEOL — Policy Enforcer Tests
+# Layer 4: PEOL: Policy Enforcer Tests
 # ═══════════════════════════════════════════════════════════════════
 
 class TestPolicyEnforcer:
@@ -345,7 +345,7 @@ class TestPolicyEnforcer:
 
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 5: TAALL — Telemetry Tests
+# Layer 5: TAALL: Telemetry Tests
 # ═══════════════════════════════════════════════════════════════════
 
 class TestTelemetryCollector:

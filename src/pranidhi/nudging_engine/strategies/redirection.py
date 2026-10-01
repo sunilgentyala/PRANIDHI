@@ -1,4 +1,4 @@
-"""Tool Redirection — routes high-risk queries to safer execution paths."""
+"""Tool Redirection: routes high-risk queries to safer execution paths."""
 
 from typing import ClassVar
 

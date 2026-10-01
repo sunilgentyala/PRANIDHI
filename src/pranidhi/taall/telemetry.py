@@ -1,5 +1,5 @@
 """
-Layer 5 — Telemetry, Analytics & Adaptive Learning Layer (TAALL).
+Layer 5: Telemetry, Analytics & Adaptive Learning Layer (TAALL).
 
 Captures comprehensive interaction telemetry, powers the Prompt Hygiene
 Dashboard, the Adaptive Threshold Engine, and the Coaching Effectiveness
@@ -74,9 +74,9 @@ class TelemetryCollector:
     PRANIDHI pipeline.
 
     Provides three analytical subsystems:
-      1. Prompt Hygiene Dashboard — real-time and historical metrics
-      2. Adaptive Threshold Engine — dynamic threshold refinement
-      3. Coaching Effectiveness Analyser — longitudinal coaching impact
+      1. Prompt Hygiene Dashboard: real-time and historical metrics
+      2. Adaptive Threshold Engine: dynamic threshold refinement
+      3. Coaching Effectiveness Analyser: longitudinal coaching impact
 
     Parameters
     ----------

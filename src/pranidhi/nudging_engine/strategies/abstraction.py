@@ -1,4 +1,4 @@
-"""Abstraction Elevation — lifts instance-specific queries to pattern-level."""
+"""Abstraction Elevation: lifts instance-specific queries to pattern-level."""
 
 from pranidhi.models import CoachingStrategy, CoachingSuggestion, RiskAnnotation, UserContext
 

@@ -9,7 +9,7 @@ description = "Pre-prompt data governance and coaching framework for enterprise 
 readme = "README.md"
 license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
-keywords = ["ai-security", "guardrails", "dlp", "llm", "prompt-engineering", "data-governance"]
+keywords = ["ai-security", "guardrails", "dlp", "llm", "prompt-engineering", "data-governance", "nudging", "shadow-ai", "ai-governance"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -35,10 +35,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/pranidhi-framework/pranidhi"
-Documentation = "https://pranidhi-framework.github.io/pranidhi/"
-Repository = "https://github.com/pranidhi-framework/pranidhi"
-Issues = "https://github.com/pranidhi-framework/pranidhi/issues"
+Homepage = "https://github.com/sunilgentyala/PRANIDHI"
+Documentation = "https://sunilgentyala.github.io/PRANIDHI/"
+Repository = "https://github.com/sunilgentyala/PRANIDHI"
+Issues = "https://github.com/sunilgentyala/PRANIDHI/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -1,5 +1,5 @@
 """
-Layer 3 — The Nudging Engine (NE).
+Layer 3: The Nudging Engine (NE).
 
 The framework's cardinal innovation. Rather than merely blocking risky
 prompts, the NE generates context-sensitive, actionable coaching

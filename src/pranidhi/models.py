@@ -12,7 +12,6 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Optional
 
 
 class Disposition(str, Enum):
@@ -133,7 +132,7 @@ class ScanResult:
     suggestions: list[CoachingSuggestion] = field(default_factory=list)
     disposition: Disposition = Disposition.GREEN
     risk_score: float = 0.0
-    user_context: Optional[UserContext] = None
+    user_context: UserContext | None = None
     processing_time_ms: float = 0.0
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -150,7 +149,7 @@ class ScanResult:
         return self.disposition == Disposition.RED
 
     @property
-    def highest_risk_block(self) -> Optional[RiskAnnotation]:
+    def highest_risk_block(self) -> RiskAnnotation | None:
         if not self.risk_annotations:
             return None
         return max(self.risk_annotations, key=lambda a: a.risk_score.composite)

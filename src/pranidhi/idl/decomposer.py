@@ -8,11 +8,11 @@ language detection, and structural fingerprinting.
 
 from __future__ import annotations
 
-import re
-import uuid
 import base64
 import logging
+import re
 import unicodedata
+import uuid
 from urllib.parse import unquote
 
 from pranidhi.models import ContentBlock, ContentBlockType
@@ -271,9 +271,11 @@ class Decomposer:
             if len(fragment) % 4:
                 continue
             try:
-                decoded = base64.b64decode(fragment).decode("utf-8", errors="strict")
-            except Exception:
-                continue
-            if len(decoded) > 4 and all(c.isprintable() or c in "\n\r" for c in decoded):
+                decoded: str | None = base64.b64decode(fragment).decode("utf-8", errors="strict")
+            except ValueError:  # binascii.Error and UnicodeDecodeError are both ValueErrors
+                decoded = None
+            if decoded is not None and len(decoded) > 4 and all(
+                c.isprintable() or c in "\n\r" for c in decoded
+            ):
                 views.append(decoded)
         return views

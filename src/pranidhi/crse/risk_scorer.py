@@ -13,9 +13,13 @@ import logging
 import math
 
 from pranidhi.models import (
-    ContentBlock, ContentBlockType, UserContext,
-    RiskScore, RiskAnnotation, Disposition,
+    ContentBlock,
+    ContentBlockType,
+    Disposition,
+    RiskAnnotation,
+    RiskScore,
     SensitivityTier,
+    UserContext,
 )
 
 logger = logging.getLogger(__name__)

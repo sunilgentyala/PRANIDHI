@@ -2,14 +2,19 @@
 Substitutive Reformulation — replaces sensitive data with synthetic equivalents.
 """
 
+from typing import ClassVar
+
 from pranidhi.models import (
-    RiskAnnotation, UserContext, CoachingSuggestion, CoachingStrategy,
+    CoachingStrategy,
+    CoachingSuggestion,
+    RiskAnnotation,
+    UserContext,
 )
 
 
 class SubstitutiveReformulator:
 
-    PLACEHOLDERS = {
+    PLACEHOLDERS: ClassVar[dict[str, str]] = {
         "PII_FRAGMENT": "[REDACTED-PII]",
         "CREDENTIAL": "[REDACTED-CREDENTIAL]",
         "CODE_SNIPPET": "[code snippet describing the logic without proprietary details]",

@@ -11,16 +11,13 @@ coaching suggestions, and enforcement decisions.
 
 from __future__ import annotations
 
-import time
 import logging
+import time
 from pathlib import Path
-from typing import Optional
 
-from pranidhi.models import (
-    ScanResult, UserContext
-)
-from pranidhi.idl.decomposer import Decomposer
 from pranidhi.crse.risk_scorer import RiskScorer
+from pranidhi.idl.decomposer import Decomposer
+from pranidhi.models import ScanResult, UserContext
 from pranidhi.nudging_engine.engine import NudgingEngine
 from pranidhi.peol.enforcer import PolicyEnforcer
 from pranidhi.taall.telemetry import TelemetryCollector
@@ -52,7 +49,7 @@ class PranidhiPipeline:
     def __init__(
         self,
         policy_path: str | Path = "policies/default.yaml",
-        connectors: Optional[list] = None,
+        connectors: list | None = None,
         enable_telemetry: bool = True,
         coaching_model: str = "internal-coaching-v1",
     ):
@@ -76,7 +73,7 @@ class PranidhiPipeline:
     def scan(
         self,
         prompt: str,
-        user_context: Optional[dict | UserContext] = None,
+        user_context: dict | UserContext | None = None,
     ) -> ScanResult:
         """
         Run the full PRANIDHI pipeline on a single prompt.
@@ -168,7 +165,7 @@ class PranidhiPipeline:
     def scan_batch(
         self,
         prompts: list[str],
-        user_context: Optional[dict | UserContext] = None,
+        user_context: dict | UserContext | None = None,
     ) -> list[ScanResult]:
         """Scan multiple prompts sequentially."""
         return [self.scan(p, user_context) for p in prompts]

@@ -1,9 +1,9 @@
 """Smoke tests for the synthetic-corpus evaluation harness."""
 
-from benchmarks.corpus import generate_corpus
 from benchmarks.baseline import ProhibitionOnlyBaseline
+from benchmarks.corpus import generate_corpus
 from benchmarks.run_evaluation import run
-from pranidhi.models import UserContext, Disposition
+from pranidhi.models import Disposition, UserContext
 
 
 class TestCorpus:

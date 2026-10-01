@@ -1,6 +1,6 @@
 """Decomposition — splits multi-entity prompts into safe sub-queries."""
 
-from pranidhi.models import RiskAnnotation, UserContext, CoachingSuggestion, CoachingStrategy
+from pranidhi.models import CoachingStrategy, CoachingSuggestion, RiskAnnotation, UserContext
 
 
 class DecompositionPlanner:

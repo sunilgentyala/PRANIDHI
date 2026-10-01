@@ -14,8 +14,13 @@ import pytest
 
 from pranidhi.idl.decomposer import Decomposer
 from pranidhi.models import (
-    ContentBlockType, Disposition, RiskAnnotation, RiskScore, ContentBlock,
-    SensitivityTier, UserContext,
+    ContentBlock,
+    ContentBlockType,
+    Disposition,
+    RiskAnnotation,
+    RiskScore,
+    SensitivityTier,
+    UserContext,
 )
 from pranidhi.peol.enforcer import PolicyEnforcer
 from pranidhi.pipeline import PranidhiPipeline

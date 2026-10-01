@@ -16,7 +16,6 @@ import os
 import secrets
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Optional
 
 from pranidhi.models import ScanResult
 
@@ -90,9 +89,9 @@ class TelemetryCollector:
     def __init__(
         self,
         max_buffer_size: int = 10_000,
-        export_path: Optional[str] = None,
+        export_path: str | None = None,
         pseudonymise_user_ids: bool = True,
-        pseudonym_key: Optional[bytes] = None,
+        pseudonym_key: bytes | None = None,
     ):
         # User identifiers are pseudonymised with a keyed hash (HMAC-SHA256)
         # before they enter the buffer, so telemetry exports do not carry raw
@@ -256,8 +255,7 @@ class TelemetryCollector:
 
         try:
             with open(self._export_path, "a") as f:
-                for record in self._buffer:
-                    f.write(json.dumps(record.to_dict()) + "\n")
+                f.writelines(json.dumps(record.to_dict()) + "\n" for record in self._buffer)
             logger.info("Flushed %d telemetry records to %s", len(self._buffer), self._export_path)
         except OSError as exc:
             logger.error("Failed to flush telemetry: %s", exc)

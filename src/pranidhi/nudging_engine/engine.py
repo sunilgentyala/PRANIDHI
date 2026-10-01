@@ -11,13 +11,15 @@ from __future__ import annotations
 import logging
 
 from pranidhi.models import (
-    RiskAnnotation, UserContext, CoachingSuggestion,
+    CoachingSuggestion,
     Disposition,
+    RiskAnnotation,
+    UserContext,
 )
-from pranidhi.nudging_engine.strategies.substitutive import SubstitutiveReformulator
-from pranidhi.nudging_engine.strategies.decomposition import DecompositionPlanner
 from pranidhi.nudging_engine.strategies.abstraction import AbstractionElevator
+from pranidhi.nudging_engine.strategies.decomposition import DecompositionPlanner
 from pranidhi.nudging_engine.strategies.redirection import ToolRedirector
+from pranidhi.nudging_engine.strategies.substitutive import SubstitutiveReformulator
 
 logger = logging.getLogger(__name__)
 

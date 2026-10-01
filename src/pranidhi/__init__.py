@@ -11,13 +11,13 @@ __version__ = "0.2.0"
 __author__ = "PRANIDHI Contributors"
 __license__ = "Apache-2.0"
 
+from pranidhi.models import CoachingSuggestion, Disposition, RiskScore, ScanResult
 from pranidhi.pipeline import PranidhiPipeline
-from pranidhi.models import ScanResult, RiskScore, Disposition, CoachingSuggestion
 
 __all__ = [
-    "PranidhiPipeline",
-    "ScanResult",
-    "RiskScore",
-    "Disposition",
     "CoachingSuggestion",
+    "Disposition",
+    "PranidhiPipeline",
+    "RiskScore",
+    "ScanResult",
 ]

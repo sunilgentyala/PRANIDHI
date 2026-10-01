@@ -5,19 +5,25 @@ Covers all five layers with unit tests for decomposition, risk scoring,
 coaching strategy selection, policy enforcement, and telemetry collection.
 """
 
-from pranidhi.models import (
-    ContentBlock, ContentBlockType, UserContext, RiskScore,
-    RiskAnnotation, Disposition, SensitivityTier,
-    CoachingSuggestion, CoachingStrategy, ScanResult,
-)
-from pranidhi.idl.decomposer import Decomposer
 from pranidhi.crse.risk_scorer import RiskScorer
+from pranidhi.idl.decomposer import Decomposer
+from pranidhi.models import (
+    CoachingStrategy,
+    CoachingSuggestion,
+    ContentBlock,
+    ContentBlockType,
+    Disposition,
+    RiskAnnotation,
+    RiskScore,
+    ScanResult,
+    SensitivityTier,
+    UserContext,
+)
 from pranidhi.nudging_engine.engine import NudgingEngine
-from pranidhi.nudging_engine.strategies.substitutive import SubstitutiveReformulator
 from pranidhi.nudging_engine.strategies.redirection import ToolRedirector
+from pranidhi.nudging_engine.strategies.substitutive import SubstitutiveReformulator
 from pranidhi.peol.enforcer import PolicyEnforcer
 from pranidhi.taall.telemetry import TelemetryCollector
-
 
 # ═══════════════════════════════════════════════════════════════════
 # Layer 1: IDL — Decomposer Tests
@@ -443,7 +449,7 @@ class TestIntegration:
         assert disp in (Disposition.AMBER, Disposition.RED)
 
     def test_code_with_secrets_flagged(self):
-        disp, suggestions, annotations = self._run_pipeline(
+        _disp, _suggestions, annotations = self._run_pipeline(
             'import os; api_key_production = "sk_prod_realkey12345678901234567890"'
         )
         # Should detect both code and credential

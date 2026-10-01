@@ -21,10 +21,13 @@ from __future__ import annotations
 import logging
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, ClassVar
 
 from pranidhi.models import (
-    RiskAnnotation, CoachingSuggestion, UserContext, Disposition,
+    CoachingSuggestion,
+    Disposition,
+    RiskAnnotation,
+    UserContext,
 )
 
 logger = logging.getLogger(__name__)
@@ -43,12 +46,12 @@ class PolicyEnforcer:
 
     # Enterprise floor: content types that are ALWAYS blocked. Policy files
     # may add to this set but cannot remove from it.
-    ABSOLUTE_BLOCKS = {"CREDENTIAL"}
+    ABSOLUTE_BLOCKS: ClassVar[frozenset[str]] = frozenset({"CREDENTIAL"})
 
     # Enterprise floor threshold (tau_0). Departments may only lower it.
     FLOOR_THRESHOLD = 0.7
 
-    def __init__(self, policy_path: Optional[Path] = None):
+    def __init__(self, policy_path: Path | None = None):
         self._policy_path = policy_path
         self._policies = self._load_policies(policy_path)
         self.audit_log: list[dict[str, Any]] = []
@@ -152,7 +155,7 @@ class PolicyEnforcer:
         logger.info("PEOL audit: %s", record)
 
     @staticmethod
-    def _load_policies(path: Optional[Path]) -> dict:
+    def _load_policies(path: Path | None) -> dict:
         """Load policy configuration from YAML; fail closed on any problem."""
         if path is None:
             return dict(_STRICT_DEFAULTS)
@@ -161,12 +164,13 @@ class PolicyEnforcer:
             return dict(_STRICT_DEFAULTS)
         try:
             import yaml
-            with open(path, encoding="utf-8") as f:
-                loaded = yaml.safe_load(f)
         except ImportError:
             logger.warning("PyYAML not installed; using strict default policies.")
             return dict(_STRICT_DEFAULTS)
-        except Exception as exc:
+        try:
+            with open(path, encoding="utf-8") as f:
+                loaded = yaml.safe_load(f)
+        except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
             logger.error("Failed to load policies from %s: %s", path, exc)
             return dict(_STRICT_DEFAULTS)
         if not isinstance(loaded, dict):

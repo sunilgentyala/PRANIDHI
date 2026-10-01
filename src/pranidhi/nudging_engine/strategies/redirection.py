@@ -1,11 +1,13 @@
 """Tool Redirection — routes high-risk queries to safer execution paths."""
 
-from pranidhi.models import RiskAnnotation, UserContext, CoachingSuggestion, CoachingStrategy
+from typing import ClassVar
+
+from pranidhi.models import CoachingStrategy, CoachingSuggestion, RiskAnnotation, UserContext
 
 
 class ToolRedirector:
 
-    ALTERNATIVES = {
+    ALTERNATIVES: ClassVar[dict[str, str]] = {
         "CREDENTIAL": "Use your organisation's secrets manager or internal vault.",
         "CODE_SNIPPET": "Use the internally-hosted code assistant with data retention disabled.",
         "PII_FRAGMENT": "Use the privacy-preserving sandbox environment.",

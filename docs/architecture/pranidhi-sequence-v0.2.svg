@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="890" viewBox="0 0 1200 890" font-family="'Times New Roman', Georgia, serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f2d4d"/></marker><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2e7d4f"/></marker></defs>
+<rect width="1200" height="890" fill="#ffffff"/>
+<line x1="80" y1="82" x2="80" y2="820" stroke="#9aa5bd" stroke-width="1.6" stroke-dasharray="4 5"/>
+<rect x="16" y="16" width="128" height="60" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="80" y="41" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">User /</text>
+<text x="80" y="62" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">client</text>
+<line x1="230" y1="82" x2="230" y2="820" stroke="#9aa5bd" stroke-width="1.6" stroke-dasharray="4 5"/>
+<rect x="166" y="16" width="128" height="60" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="230" y="52" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">IDL (L1)</text>
+<line x1="380" y1="82" x2="380" y2="820" stroke="#9aa5bd" stroke-width="1.6" stroke-dasharray="4 5"/>
+<rect x="316" y="16" width="128" height="60" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="380" y="52" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">CRSE (L2)</text>
+<line x1="530" y1="82" x2="530" y2="820" stroke="#9aa5bd" stroke-width="1.6" stroke-dasharray="4 5"/>
+<rect x="466" y="16" width="128" height="60" rx="9" fill="#e6ecf8" stroke="#1f2d4d" stroke-width="2"/>
+<text x="530" y="41" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">Nudging</text>
+<text x="530" y="62" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">Engine (L3)</text>
+<line x1="680" y1="82" x2="680" y2="820" stroke="#9aa5bd" stroke-width="1.6" stroke-dasharray="4 5"/>
+<rect x="616" y="16" width="128" height="60" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="680" y="52" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">PEOL (L4)</text>
+<line x1="830" y1="82" x2="830" y2="820" stroke="#9aa5bd" stroke-width="1.6" stroke-dasharray="4 5"/>
+<rect x="766" y="16" width="128" height="60" rx="9" fill="#eaf4ee" stroke="#2e7d4f" stroke-width="2"/>
+<text x="830" y="41" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">Identity and</text>
+<text x="830" y="62" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">policy store</text>
+<line x1="980" y1="82" x2="980" y2="820" stroke="#9aa5bd" stroke-width="1.6" stroke-dasharray="4 5"/>
+<rect x="916" y="16" width="128" height="60" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="980" y="52" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">TAALL (L5)</text>
+<line x1="1120" y1="82" x2="1120" y2="820" stroke="#9aa5bd" stroke-width="1.6" stroke-dasharray="4 5"/>
+<rect x="1056" y="16" width="128" height="60" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="1120" y="41" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">Target</text>
+<text x="1120" y="62" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f2d4d">LLM</text>
+<line x1="80" y1="130" x2="230" y2="130" stroke="#1f2d4d" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="73" y="104" width="164" height="22.5" fill="#ffffff"/>
+<text x="155" y="120" text-anchor="middle" font-size="15.5" fill="#222">1. scan(prompt, ctx)</text>
+<rect x="244" y="150" width="350" height="69" rx="6" fill="#eaf4ee" stroke="#2e7d4f" stroke-width="1.5"/>
+<text x="254" y="171" font-size="14.5" fill="#1d4d31">2. normalise (control E1): NFKC, strip</text>
+<text x="254" y="190" font-size="14.5" fill="#1d4d31">format chars, decode %/hex/Base64,</text>
+<text x="254" y="209" font-size="14.5" fill="#1d4d31">fold confusables; original kept</text>
+<line x1="230" y1="254" x2="380" y2="254" stroke="#1f2d4d" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="189" y="228" width="232" height="22.5" fill="#ffffff"/>
+<text x="305" y="244" text-anchor="middle" font-size="15.5" fill="#222">3. decompose() returns blocks</text>
+<line x1="380" y1="306" x2="530" y2="306" stroke="#1f2d4d" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="308" y="280" width="293" height="22.5" fill="#ffffff"/>
+<text x="455" y="296" text-anchor="middle" font-size="15.5" fill="#222">4. score_blocks() returns annotations</text>
+<rect x="396" y="338" width="348" height="154" rx="6" fill="none" stroke="#8c1d12" stroke-width="1.8" stroke-dasharray="8 5"/>
+<rect x="396" y="338" width="64" height="24" fill="#8c1d12"/>
+<text x="428" y="355" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#ffffff">alt</text>
+<rect x="436" y="372" width="168" height="21.5" fill="#ffffff"/>
+<text x="520" y="386" text-anchor="middle" font-size="14.5" fill="#8c1d12" font-style="italic">[GREEN: 31% of corpus]</text>
+<line x1="530" y1="414" x2="680" y2="414" stroke="#555555" stroke-width="2.4" stroke-dasharray="6 5" marker-end="url(#a)"/>
+<rect x="508" y="388" width="194" height="22.5" fill="#ffffff"/>
+<text x="605" y="404" text-anchor="middle" font-size="15.5" fill="#222">5a. skip, no suggestions</text>
+<rect x="444" y="432" width="111" height="21.5" fill="#ffffff"/>
+<text x="500" y="446" text-anchor="middle" font-size="14.5" fill="#8c1d12" font-style="italic">[AMBER or RED]</text>
+<line x1="530" y1="476" x2="680" y2="476" stroke="#1f2d4d" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="470" y="450" width="270" height="22.5" fill="#ffffff"/>
+<text x="605" y="466" text-anchor="middle" font-size="15.5" fill="#222">5b. generate_coaching(), at most 3</text>
+<line x1="830" y1="536" x2="680" y2="536" stroke="#2e7d4f" stroke-width="2.4" marker-end="url(#g)"/>
+<rect x="646" y="510" width="217" height="22.5" fill="#ffffff"/>
+<text x="755" y="526" text-anchor="middle" font-size="15.5" fill="#222">6a. role, department (TB-2)</text>
+<line x1="830" y1="578" x2="680" y2="578" stroke="#2e7d4f" stroke-width="2.4" marker-end="url(#g)"/>
+<rect x="662" y="552" width="187" height="22.5" fill="#ffffff"/>
+<text x="755" y="568" text-anchor="middle" font-size="15.5" fill="#222">6b. policy, fail-closed</text>
+<rect x="700" y="596" width="440" height="69" rx="6" fill="#fff6df" stroke="#b07a00" stroke-width="1.5"/>
+<text x="710" y="617" font-size="14.5" fill="#5b3f00">6c. enforce(): Tier 1 floor, then Tier 2 clamped</text>
+<text x="710" y="636" font-size="14.5" fill="#5b3f00">to the floor, then Tier 3 (RED to AMBER only,</text>
+<text x="710" y="655" font-size="14.5" fill="#5b3f00">audited). No prompt text is logged.</text>
+<line x1="680" y1="712" x2="980" y2="712" stroke="#1f2d4d" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="680" y="686" width="301" height="22.5" fill="#ffffff"/>
+<text x="830" y="702" text-anchor="middle" font-size="15.5" fill="#222">7. record(): pseudonym, no prompt text</text>
+<line x1="680" y1="758" x2="80" y2="758" stroke="#1f2d4d" stroke-width="2.4" marker-end="url(#a)"/>
+<rect x="199" y="732" width="361" height="22.5" fill="#ffffff"/>
+<text x="380" y="748" text-anchor="middle" font-size="15.5" fill="#222">8. return ScanResult(disposition, suggestions)</text>
+<line x1="680" y1="802" x2="1120" y2="802" stroke="#2e7d4f" stroke-width="2.4" marker-end="url(#g)"/>
+<rect x="788" y="776" width="225" height="22.5" fill="#ffffff"/>
+<text x="900" y="792" text-anchor="middle" font-size="15.5" fill="#222">9. forward if GREEN or AMBER</text>
+<rect x="953" y="814" width="197" height="21" fill="#ffffff"/>
+<text x="1052" y="828" text-anchor="middle" font-size="14" fill="#8c1d12">RED: blocked, not forwarded</text>
+<line x1="24" y1="840" x2="1176" y2="840" stroke="#cfd5e3" stroke-width="1.2"/>
+<text x="24" y="862" font-size="14.5" fill="#222">Latency, 400-item synthetic corpus: mean 0.0752 ms per scan, p95 0.1001 ms; in-process, no network or model call.</text>
+<text x="24" y="882" font-size="14.5" fill="#222">Cross-prompt correlation (T7) needs cross-scan state not shown here; TAALL records telemetry but does not yet correlate it.</text>
+</svg>

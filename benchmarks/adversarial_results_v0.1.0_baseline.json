@@ -1,0 +1,138 @@
+{
+  "seed": 20260930,
+  "items_per_cell": 120,
+  "by_transformation": {
+    "T0_plain": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.3417,
+        "block_rate": 0.175
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 1.0,
+        "block_rate": 0.0
+      }
+    },
+    "T1_zero_width": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.3667,
+        "block_rate": 0.2083
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 1.0,
+        "block_rate": 0.0
+      }
+    },
+    "T2_homoglyph": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.3583,
+        "block_rate": 0.1917
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 1.0,
+        "block_rate": 0.0
+      }
+    },
+    "T3_percent_encoding": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.35,
+        "block_rate": 0.1917
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 1.0,
+        "block_rate": 0.0
+      }
+    },
+    "T4_base64": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.3583,
+        "block_rate": 0.2
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 0.6667,
+        "block_rate": 0.0
+      }
+    },
+    "T5_fullwidth": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.1667,
+        "block_rate": 0.0
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 0.0,
+        "block_rate": 0.0
+      }
+    },
+    "T6_spacing": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.9583,
+        "block_rate": 0.0
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 1.0,
+        "block_rate": 0.0
+      }
+    },
+    "T7_hex": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.3417,
+        "block_rate": 0.0
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 0.0833,
+        "block_rate": 0.0
+      }
+    },
+    "T8_reversed": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.2,
+        "block_rate": 0.05
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 0.3333,
+        "block_rate": 0.0
+      }
+    },
+    "T9_rot13": {
+      "credential": {
+        "n": 120,
+        "flag_rate": 0.2083,
+        "block_rate": 0.0417
+      },
+      "pii": {
+        "n": 60,
+        "flag_rate": 0.6667,
+        "block_rate": 0.0
+      }
+    }
+  },
+  "benign_false_block_rate": {
+    "T0_plain": 0.0,
+    "T1_zero_width": 0.0,
+    "T2_homoglyph": 0.0,
+    "T5_fullwidth": 0.0
+  },
+  "summary_in_scope_T0_T6": {
+    "mean_credential_flag_rate": 0.4143,
+    "mean_credential_block_rate": 0.1381,
+    "mean_pii_flag_rate": 0.8095
+  },
+  "note": "Synthetic secrets assembled at run time; T7-T9 are outside IDL normalisation scope by design."
+}

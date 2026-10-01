@@ -7,7 +7,7 @@ user prompts before they reach external AI tools, and provides real-time
 reformulation guidance instead of opaque blocking.
 """
 
-__version__ = "0.1.0-alpha"
+__version__ = "0.2.0"
 __author__ = "PRANIDHI Contributors"
 __license__ = "Apache-2.0"
 

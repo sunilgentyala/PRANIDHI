@@ -8,8 +8,12 @@ Analyser.
 
 from __future__ import annotations
 
+import hashlib
+import hmac
 import json
 import logging
+import os
+import secrets
 from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Optional
@@ -87,7 +91,17 @@ class TelemetryCollector:
         self,
         max_buffer_size: int = 10_000,
         export_path: Optional[str] = None,
+        pseudonymise_user_ids: bool = True,
+        pseudonym_key: Optional[bytes] = None,
     ):
+        # User identifiers are pseudonymised with a keyed hash (HMAC-SHA256)
+        # before they enter the buffer, so telemetry exports do not carry raw
+        # identities. The key comes from the argument, the PRANIDHI_TELEMETRY_KEY
+        # environment variable, or a per-process random key (in which case
+        # pseudonyms are not stable across restarts).
+        self._pseudonymise = pseudonymise_user_ids
+        env_key = os.environ.get("PRANIDHI_TELEMETRY_KEY")
+        self._key = pseudonym_key or (env_key.encode("utf-8") if env_key else secrets.token_bytes(32))
         self._buffer: list[InteractionRecord] = []
         self._max_buffer = max_buffer_size
         self._export_path = export_path
@@ -116,7 +130,7 @@ class TelemetryCollector:
         record = InteractionRecord(
             scan_id=result.scan_id,
             timestamp=result.timestamp.isoformat(),
-            user_id=ctx.user_id if ctx else "anonymous",
+            user_id=self._pseudonym(ctx.user_id if ctx else "anonymous"),
             department=ctx.department if ctx else "unknown",
             target_platform=ctx.target_platform if ctx else "unknown",
             disposition=result.disposition.value,
@@ -139,6 +153,13 @@ class TelemetryCollector:
             record.disposition,
             record.risk_score,
         )
+
+    def _pseudonym(self, user_id: str) -> str:
+        """Return a stable keyed pseudonym for a user identifier."""
+        if not self._pseudonymise:
+            return user_id
+        digest = hmac.new(self._key, user_id.encode("utf-8"), hashlib.sha256).hexdigest()
+        return "u_" + digest[:16]
 
     def _update_aggregates(self, record: InteractionRecord) -> None:
         """Update running aggregate accumulators."""
@@ -203,11 +224,17 @@ class TelemetryCollector:
         indicators (GREEN dispositions followed by manual escalations) to
         recommend threshold refinements.
 
+        Suggestions are advisory only and are clamped to the enterprise floor
+        (0.70): telemetry can recommend tightening below the floor, but never
+        relaxing above it, so an adversary who floods the pipeline with benign
+        prompts cannot use this feedback loop to loosen enforcement.
+
         Returns
         -------
         dict
             Suggested threshold adjustments per department.
         """
+        floor = 0.7
         suggestions = {}
         for dept, scores in self._department_risk.items():
             if len(scores) < 10:
@@ -215,10 +242,10 @@ class TelemetryCollector:
             avg = sum(scores) / len(scores)
             # If average risk is consistently low, suggest relaxing thresholds
             if avg < 0.2:
-                suggestions[dept] = round(min(0.8, avg + 0.15), 3)
+                suggestions[dept] = round(min(floor, avg + 0.15), 3)
             # If average risk is consistently high, suggest tightening
             elif avg > 0.6:
-                suggestions[dept] = round(max(0.3, avg - 0.1), 3)
+                suggestions[dept] = round(min(floor, max(0.3, avg - 0.1)), 3)
         return suggestions
 
     def _flush(self) -> None:

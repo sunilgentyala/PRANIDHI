@@ -63,7 +63,7 @@ PRANIDHI operates as a **five-layer middleware pipeline**:
 
 ```
 Layer 1: IDL   — Ingestion & Decomposition Layer
-                 Tokenises input, detects encoding tricks, extracts metadata
+                 Normalises (NFKC, invisible-character stripping, decoding) and extracts typed fragments
 
 Layer 2: CRSE  — Classification & Risk Scoring Engine
                  Three-dimensional scoring: sensitivity × exposure × inferential leakage
@@ -77,6 +77,10 @@ Layer 4: PEOL  — Policy Enforcement & Orchestration Layer
 Layer 5: TAALL — Telemetry, Analytics & Adaptive Learning Layer
                  Behavioural analytics, adaptive thresholds, coaching effectiveness tracking
 ```
+
+![PRANIDHI v0.2 architecture with trust boundaries and security controls](docs/architecture/pranidhi-architecture-v0.2.png)
+
+The prompt lifecycle, including the security checkpoints, is in [`docs/architecture/pranidhi-sequence-v0.2.png`](docs/architecture/pranidhi-sequence-v0.2.png).
 
 ## Quick Start
 
@@ -167,20 +171,44 @@ A paper describing PRANIDHI, "Enterprise Large Language Model Governance: A Syst
 
 ### Reproducible evaluation
 
-[`benchmarks/`](benchmarks/) contains a small, fully-synthetic, seeded prompt corpus (`corpus.py`) and an evaluation harness (`run_evaluation.py`) that runs the real pipeline in `src/pranidhi` against it and against a prohibition-only baseline that shares the same detection layer. Run it yourself:
+[`benchmarks/`](benchmarks/) contains three fully-synthetic, seeded evaluations that run the real pipeline in `src/pranidhi`:
 
-```bash
-python -m benchmarks.run_evaluation
-```
+| Script | What it measures |
+|---|---|
+| `python -m benchmarks.run_evaluation` | 400-item cooperative corpus: disposition mix, detection quality, latency, versus a prohibition-only baseline sharing the same detection layer |
+| `python -m benchmarks.adversarial` | Evasion robustness: the same secrets under ten transformations (zero-width, homoglyph, percent-encoding, Base64, fullwidth, spacing, hex, reversal, ROT13) |
+| `python -m benchmarks.sensitivity` | 25 configurations of CRSE weights and thresholds |
 
-This is a reproducibility artifact, not a live enterprise deployment or a human-subjects study — every number it produces comes from executing the actual code in this repository against synthetic, templated prompts.
+**v0.2.0 results on the main corpus** (seed 20260721): GREEN 30.75%, AMBER 49.25%, RED 20.0% (baseline: RED 69.25%); precision 0.9567, recall 0.8281, F1 0.8878; coaching coverage 100.0%. Sensitivity grid: F1 0.83 to 0.906 across 25 configurations; the RED share is 20.0% in all of them because RED is produced only by the Tier 1 credential floor once coaching coverage is complete.
+
+**Correction relative to v0.1.0.** v0.1.0 reported recall 0.9125 and F1 0.9359. Part of that was an artefact: the code-snippet detector matched bare English words such as "drop" and "from", so some non-code financial-leak prompts were flagged by accident. v0.2.0 detects code structurally, which lowers recall to 0.8281 and is the honest figure.
+
+**Adversarial robustness** (credential = fraction blocked by the Tier 1 floor; PII = fraction flagged; v0.1.0 to v0.2.0):
+
+| Transformation | Credential block v0.1.0 | Credential block v0.2.0 | PII flag v0.1.0 | PII flag v0.2.0 |
+|---|---|---|---|---|
+| T0_plain | 0.17 | 1.00 | 1.00 | 1.00 |
+| T1_zero_width | 0.21 | 1.00 | 1.00 | 1.00 |
+| T2_homoglyph | 0.19 | 1.00 | 1.00 | 1.00 |
+| T3_percent_encoding | 0.19 | 1.00 | 1.00 | 1.00 |
+| T4_base64 | 0.20 | 1.00 | 0.67 | 1.00 |
+| T5_fullwidth | 0.00 | 1.00 | 0.00 | 1.00 |
+| T6_spacing | 0.00 | 0.83 | 1.00 | 1.00 |
+| T7_hex | 0.00 | 1.00 | 0.08 | 1.00 |
+| T8_reversed | 0.05 | 0.05 | 0.33 | 0.33 |
+| T9_rot13 | 0.04 | 0.04 | 0.67 | 0.67 |
+
+Reversal (T8) and ROT13 (T9) are outside the normalisation layer by design and remain residual risk, as does paraphrase-level semantic evasion.
+
+This is a reproducibility artefact, not a live enterprise deployment or a human-subjects study: every number comes from executing the code in this repository against synthetic, templated prompts.
 
 ## Roadmap
 
 - [x] Core architecture specification
 - [x] Gap analysis and competitive positioning
-- [x] Five-layer pipeline with 36 passing tests
-- [x] Reproducible synthetic-corpus evaluation harness (`benchmarks/`)
+- [x] Five-layer pipeline with 77 passing tests (v0.2.0)
+- [x] Security hardening: NFKC and encoding normalisation, vendor credential patterns, tier-narrowing enforcement, fail-closed policy loading, pseudonymised telemetry
+- [x] Reproducible synthetic-corpus evaluation harness (`benchmarks/`): cooperative, adversarial, and sensitivity runs
 - [ ] Nudging Engine — advanced LLM-powered reformulation
 - [ ] Browser extension (Chrome/Firefox)
 - [ ] VS Code extension

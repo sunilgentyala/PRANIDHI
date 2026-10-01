@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" font-family="'Times New Roman', Georgia, serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f2d4d"/></marker><marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2e7d4f"/></marker><marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8c1d12"/></marker></defs>
+<rect width="1200" height="820" fill="#ffffff"/>
+<rect x="30" y="16" width="212" height="78" rx="9" fill="#f6efe9" stroke="#8c1d12" stroke-width="2"/>
+<text x="136.0" y="42" font-size="18" fill="#8c1d12" font-weight="bold" text-anchor="middle">Untrusted input</text>
+<text x="136.0" y="64" font-size="15" fill="#333" font-weight="normal" text-anchor="middle">prompt, pasted text,</text>
+<text x="136.0" y="82" font-size="15" fill="#333" font-weight="normal" text-anchor="middle">obfuscated content</text>
+<text x="146.0" y="128" font-size="14" fill="#8c1d12" font-weight="normal" text-anchor="start">TB-1</text>
+<rect x="726" y="16" width="212" height="78" rx="9" fill="#eaf4ee" stroke="#2e7d4f" stroke-width="2"/>
+<text x="832.0" y="42" font-size="17" fill="#2e7d4f" font-weight="bold" text-anchor="middle">Policy store (YAML)</text>
+<text x="832.0" y="64" font-size="14.5" fill="#333" font-weight="normal" text-anchor="middle">fail-closed on any error;</text>
+<text x="832.0" y="82" font-size="14.5" fill="#333" font-weight="normal" text-anchor="middle">sign at deployment</text>
+<rect x="958" y="16" width="212" height="78" rx="9" fill="#eaf4ee" stroke="#2e7d4f" stroke-width="2"/>
+<text x="1064.0" y="42" font-size="17" fill="#2e7d4f" font-weight="bold" text-anchor="middle">Identity provider</text>
+<text x="1064.0" y="64" font-size="14.5" fill="#333" font-weight="normal" text-anchor="middle">authenticated role and</text>
+<text x="1064.0" y="82" font-size="14.5" fill="#333" font-weight="normal" text-anchor="middle">department (TB-2)</text>
+<rect x="14" y="108" width="1172" height="388" rx="14" fill="#fbfcfe" stroke="#1f2d4d" stroke-width="2.4" stroke-dasharray="11 7"/>
+<text x="262" y="132" font-size="16.5" fill="#1f2d4d" font-weight="bold" text-anchor="start">PRANIDHI trust boundary (enterprise-controlled middleware)</text>
+<rect x="30" y="152" width="212" height="92" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="136.0" y="174" font-size="16.5" fill="#1f2d4d" font-weight="bold" text-anchor="middle">Layer 1</text>
+<text x="136.0" y="194" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">Ingestion and</text>
+<text x="136.0" y="213" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">Decomposition</text>
+<text x="136.0" y="234" font-size="14" fill="#555" font-weight="normal" text-anchor="middle">IDL</text>
+<rect x="262" y="152" width="212" height="92" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="368.0" y="174" font-size="16.5" fill="#1f2d4d" font-weight="bold" text-anchor="middle">Layer 2</text>
+<text x="368.0" y="194" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">Classification and</text>
+<text x="368.0" y="213" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">Risk Scoring</text>
+<text x="368.0" y="234" font-size="14" fill="#555" font-weight="normal" text-anchor="middle">CRSE</text>
+<rect x="494" y="152" width="212" height="92" rx="9" fill="#e6ecf8" stroke="#1f2d4d" stroke-width="3"/>
+<text x="600.0" y="174" font-size="16.5" fill="#1f2d4d" font-weight="bold" text-anchor="middle">Layer 3</text>
+<text x="600.0" y="194" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">Nudging Engine</text>
+<text x="600.0" y="213" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">4 coaching modalities</text>
+<text x="600.0" y="234" font-size="14" fill="#555" font-weight="normal" text-anchor="middle">NE</text>
+<rect x="726" y="152" width="212" height="92" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="832.0" y="174" font-size="16.5" fill="#1f2d4d" font-weight="bold" text-anchor="middle">Layer 4</text>
+<text x="832.0" y="194" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">Policy Enforcement</text>
+<text x="832.0" y="213" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">and Orchestration</text>
+<text x="832.0" y="234" font-size="14" fill="#555" font-weight="normal" text-anchor="middle">PEOL</text>
+<rect x="958" y="152" width="212" height="92" rx="9" fill="#f1f2f4" stroke="#1f2d4d" stroke-width="2"/>
+<text x="1064.0" y="174" font-size="16.5" fill="#1f2d4d" font-weight="bold" text-anchor="middle">Layer 5</text>
+<text x="1064.0" y="194" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">Telemetry and</text>
+<text x="1064.0" y="213" font-size="16" fill="#1f2d4d" font-weight="normal" text-anchor="middle">Adaptive Learning</text>
+<text x="1064.0" y="234" font-size="14" fill="#555" font-weight="normal" text-anchor="middle">TAALL</text>
+<rect x="30" y="258" width="212" height="192" rx="8" fill="#ffffff" stroke="#9aa5bd" stroke-width="1.6"/>
+<text x="42" y="281" font-size="15.5" fill="#1f2d4d" font-weight="bold" text-anchor="start">Controls</text>
+<text x="42" y="306" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">NFKC compatibility fold</text>
+<text x="42" y="327" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Strip format chars (Cf)</text>
+<text x="42" y="348" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Decode %, hex, Base64</text>
+<text x="42" y="369" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Fold Cyrillic/Greek</text>
+<text x="42" y="390" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Original text kept</text>
+<text x="42" y="436" font-size="14.8" fill="#2e7d4f" font-weight="bold" text-anchor="start">Mitigates E1</text>
+<rect x="262" y="258" width="212" height="192" rx="8" fill="#ffffff" stroke="#9aa5bd" stroke-width="1.6"/>
+<text x="274" y="281" font-size="15.5" fill="#1f2d4d" font-weight="bold" text-anchor="start">Controls</text>
+<text x="274" y="306" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Vendor credential</text>
+<text x="274" y="327" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">patterns (AWS, GitHub,</text>
+<text x="274" y="348" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Slack, JWT, PEM ...)</text>
+<text x="274" y="369" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Deterministic 3-D score</text>
+<text x="274" y="390" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Evidence, not decisions</text>
+<text x="274" y="436" font-size="14.8" fill="#2e7d4f" font-weight="bold" text-anchor="start">Mitigates E1, E6 (part)</text>
+<rect x="494" y="258" width="212" height="192" rx="8" fill="#ffffff" stroke="#9aa5bd" stroke-width="1.6"/>
+<text x="506" y="281" font-size="15.5" fill="#1f2d4d" font-weight="bold" text-anchor="start">Controls</text>
+<text x="506" y="306" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Template-based:</text>
+<text x="506" y="327" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">no model call, so no</text>
+<text x="506" y="348" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">new egress channel</text>
+<text x="506" y="369" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">At most 3 suggestions</text>
+<text x="506" y="390" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Credentials: redirect only</text>
+<text x="506" y="436" font-size="14.8" fill="#2e7d4f" font-weight="bold" text-anchor="start">No new egress channel</text>
+<rect x="726" y="258" width="212" height="192" rx="8" fill="#ffffff" stroke="#9aa5bd" stroke-width="1.6"/>
+<text x="738" y="281" font-size="15.5" fill="#1f2d4d" font-weight="bold" text-anchor="start">Controls</text>
+<text x="738" y="306" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Tier 1 floor: immutable</text>
+<text x="738" y="327" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Tier 2: clamped to floor</text>
+<text x="738" y="348" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Tier 3: audited, RED to</text>
+<text x="738" y="369" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">AMBER only, never Tier 1</text>
+<text x="738" y="390" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Fail-closed policy load</text>
+<text x="738" y="436" font-size="14.8" fill="#2e7d4f" font-weight="bold" text-anchor="start">Mitigates E2, E3 (part)</text>
+<rect x="958" y="258" width="212" height="192" rx="8" fill="#ffffff" stroke="#9aa5bd" stroke-width="1.6"/>
+<text x="970" y="281" font-size="15.5" fill="#1f2d4d" font-weight="bold" text-anchor="start">Controls</text>
+<text x="970" y="306" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">HMAC-SHA256 pseudonyms</text>
+<text x="970" y="327" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">No prompt text stored</text>
+<text x="970" y="348" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">Recalibration advisory</text>
+<text x="970" y="369" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">and clamped to floor</text>
+<text x="970" y="390" font-size="14.8" fill="#222" font-weight="normal" text-anchor="start">(never auto-applied)</text>
+<text x="970" y="436" font-size="14.8" fill="#2e7d4f" font-weight="bold" text-anchor="start">Mitigates E4, E5</text>
+<rect x="540" y="520" width="300" height="88" rx="9" fill="#eaf4ee" stroke="#2e7d4f" stroke-width="2"/>
+<text x="690" y="548" font-size="17" fill="#2e7d4f" font-weight="bold" text-anchor="middle">Target LLM (TB-3 egress)</text>
+<text x="690" y="570" font-size="15" fill="#333" font-weight="normal" text-anchor="middle">GREEN: proceed</text>
+<text x="690" y="590" font-size="15" fill="#333" font-weight="normal" text-anchor="middle">AMBER: proceed, coaching shown</text>
+<rect x="870" y="520" width="300" height="88" rx="9" fill="#f6efe9" stroke="#8c1d12" stroke-width="2"/>
+<text x="1020" y="548" font-size="17" fill="#8c1d12" font-weight="bold" text-anchor="middle">Blocked and audited</text>
+<text x="1020" y="570" font-size="15" fill="#333" font-weight="normal" text-anchor="middle">RED: Tier 1 credential floor</text>
+<text x="1020" y="590" font-size="15" fill="#333" font-weight="normal" text-anchor="middle">or no safe alternative</text>
+<text x="30" y="560" font-size="15" fill="#444" font-weight="normal" text-anchor="start" font-style="italic">Disposition is set only by Layer 4;</text>
+<text x="30" y="580" font-size="15" fill="#444" font-weight="normal" text-anchor="start" font-style="italic">earlier layers produce evidence.</text>
+<rect x="14" y="632" width="1172" height="176" rx="12" fill="#f7f8fb" stroke="#9aa5bd" stroke-width="1.6"/>
+<text x="30" y="658" font-size="16.5" fill="#1f2d4d" font-weight="bold" text-anchor="start">Attack surface of the guardrail itself (measured by benchmarks/adversarial.py; see SECURITY.md)</text>
+<rect x="30" y="672" width="366" height="60" rx="8" fill="#eaf4ee" stroke="#2e7d4f" stroke-width="1.6"/>
+<text x="42" y="693" font-size="15.5" fill="#2e7d4f" font-weight="bold" text-anchor="start">E1 Input obfuscation</text>
+<text x="42" y="710" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">zero-width, homoglyph, encoding</text>
+<text x="42" y="726" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">measured: 97.9% credential block</text>
+<rect x="412" y="672" width="366" height="60" rx="8" fill="#eaf4ee" stroke="#2e7d4f" stroke-width="1.6"/>
+<text x="424" y="693" font-size="15.5" fill="#2e7d4f" font-weight="bold" text-anchor="start">E2 Policy tampering</text>
+<text x="424" y="710" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">widened thresholds, empty floor</text>
+<text x="424" y="726" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">clamped; fail-closed (tests)</text>
+<rect x="794" y="672" width="366" height="60" rx="8" fill="#fff6df" stroke="#b07a00" stroke-width="1.6"/>
+<text x="806" y="693" font-size="15.5" fill="#8a5d00" font-weight="bold" text-anchor="start">E3 Identity spoofing</text>
+<text x="806" y="710" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">role is caller-supplied</text>
+<text x="806" y="726" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">residual: needs IdP binding</text>
+<rect x="30" y="740" width="366" height="60" rx="8" fill="#eaf4ee" stroke="#2e7d4f" stroke-width="1.6"/>
+<text x="42" y="761" font-size="15.5" fill="#2e7d4f" font-weight="bold" text-anchor="start">E4 Feedback poisoning</text>
+<text x="42" y="778" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">benign flooding cannot relax</text>
+<text x="42" y="794" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">thresholds above the floor</text>
+<rect x="412" y="740" width="366" height="60" rx="8" fill="#eaf4ee" stroke="#2e7d4f" stroke-width="1.6"/>
+<text x="424" y="761" font-size="15.5" fill="#2e7d4f" font-weight="bold" text-anchor="start">E5 Telemetry leakage</text>
+<text x="424" y="778" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">pseudonymised ids; no prompt</text>
+<text x="424" y="794" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">text in records or audit log</text>
+<rect x="794" y="740" width="366" height="60" rx="8" fill="#fbe9e6" stroke="#8c1d12" stroke-width="1.6"/>
+<text x="806" y="761" font-size="15.5" fill="#8c1d12" font-weight="bold" text-anchor="start">E6 Semantic evasion</text>
+<text x="806" y="778" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">reversal, ROT13, paraphrase</text>
+<text x="806" y="794" font-size="14.5" fill="#333" font-weight="normal" text-anchor="start">residual: outside normalisation</text>
+<line x1="136.0" y1="94" x2="136.0" y2="150" stroke="#8c1d12" stroke-width="2.6" marker-end="url(#r)"/>
+<line x1="832.0" y1="94" x2="832.0" y2="150" stroke="#2e7d4f" stroke-width="2.6" marker-end="url(#g)"/>
+<path d="M1064.0,94 L1064.0,118 L892.0,118 L892.0,150" fill="none" stroke="#2e7d4f" stroke-width="2.6" marker-end="url(#g)"/>
+<line x1="242" y1="198" x2="260" y2="198" stroke="#1f2d4d" stroke-width="2.6" marker-end="url(#a)"/>
+<line x1="474" y1="198" x2="492" y2="198" stroke="#1f2d4d" stroke-width="2.6" marker-end="url(#a)"/>
+<line x1="706" y1="198" x2="724" y2="198" stroke="#1f2d4d" stroke-width="2.6" marker-end="url(#a)"/>
+<line x1="938" y1="198" x2="956" y2="198" stroke="#1f2d4d" stroke-width="2.6" marker-end="url(#a)"/>
+<path d="M832.0,450 L832.0,508 L690,508 L690,518" fill="none" stroke="#2e7d4f" stroke-width="2.6" marker-end="url(#g)"/>
+<path d="M832.0,480 L832.0,508 L1020,508 L1020,518" fill="none" stroke="#8c1d12" stroke-width="2.6" marker-end="url(#r)"/>
+</svg>

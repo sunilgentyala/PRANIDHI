@@ -326,11 +326,16 @@ class TestPolicyEnforcer:
         result = self.enforcer.enforce([ann], [suggestion], self.ctx)
         assert result == Disposition.AMBER
 
-    def test_security_researcher_exemption(self):
+    def test_security_researcher_exemption(self, tmp_path):
+        # Exemptions exist only when a policy explicitly configures them.
+        policy = tmp_path / "policy.yaml"
+        policy.write_text("exempt_roles:\n  - security_researcher\n", encoding="utf-8")
+        enforcer = PolicyEnforcer(policy_path=policy)
         ann = self._make_annotation(Disposition.RED, ["PII"], 0.85)
         exempt_ctx = UserContext(user_id="u2", role="security_researcher", department="security")
-        result = self.enforcer.enforce([ann], [], exempt_ctx)
+        result = enforcer.enforce([ann], [], exempt_ctx)
         assert result == Disposition.AMBER
+        assert enforcer.audit_log[-1]["event"] == "tier3_exemption"
 
 
 # ═══════════════════════════════════════════════════════════════════
